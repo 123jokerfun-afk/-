@@ -1,0 +1,19 @@
+{
+  "name": "Торон Хашааны Эрсдэл",
+  "short_name": "Торон",
+  "description": "ПЧ-3 · Малын хориг хашааны эрсдэлийн үнэлгээ",
+  "lang": "mn",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#F2F0EB",
+  "theme_color": "#1B4332",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
