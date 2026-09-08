@@ -268,6 +268,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
 .sheet-btn.danger{background:#fee2e2;border-color:#fca5a5;color:#dc2626}
 .shon-item-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
 .shon-chip{font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px}
+.sync-card{display:flex;align-items:center;gap:10px;margin:12px 14px 0;padding:9px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;cursor:pointer}
+.sync-card:active{transform:scale(.99)}
+.sync-icon{font-size:18px}
+.sync-info{flex:1;min-width:0}
+.sync-name{font-size:13px;font-weight:800;color:var(--forest)}
+.sync-sub{font-size:10.5px;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sync-edit{font-size:14px;opacity:.5}
+.mgr-bar{display:none;gap:6px;margin:8px 14px 0}
+.mgr-bar.show{display:flex}
+.mgr-btn{flex:1;height:40px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;color:#fff;background:var(--forest2)}
+.mgr-btn.undo{background:#fff;color:var(--bark);border:1.5px solid var(--bark);flex:0 0 auto;padding:0 12px}
+.mgr-btn:active{opacity:.85}
 </style>
 </head>
 <body>
@@ -285,6 +297,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
 
 <!-- HOME -->
 <div class="screen active" id="homeScreen">
+  <div class="sync-card" onclick="editDevName()">
+    <div class="sync-icon">☁️</div>
+    <div class="sync-info">
+      <div class="sync-name" id="syncName">Нэрээ оруулна уу</div>
+      <div class="sync-sub" id="syncSub">—</div>
+    </div>
+    <div class="sync-edit">✏️</div>
+  </div>
+  <div class="mgr-bar" id="mgrBar">
+    <button class="mgr-btn" onclick="fbPullAll()">👥 Бүгдийн өгөгдөл татах</button>
+    <button class="mgr-btn undo" onclick="restoreBackup()">↩️ Буцаах</button>
+  </div>
   <div class="stats-row">
     <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Нийт бүртгэл</div></div>
     <div class="stat-card"><div class="stat-num" id="statKm">0</div><div class="stat-label">КМ тоо</div></div>
@@ -722,6 +746,9 @@ function doSave(km,side){
   if(!km) return;
   currentEntry.km=km; currentEntry.side=side;
   currentEntry.date=new Date().toLocaleDateString('mn-MN');
+  // Нэгтгэхэд аль нь шинэ болохыг мс нарийвчлалтай шийдэхийн тулд.
+  // (Зөвхөн date мөрөөр харьцуулбал нэг өдрийн доторх засварууд ялгагдахгүй.)
+  currentEntry.updatedAt=Date.now();
   if(editingId){
     const i=records.findIndex(r=>r.id===editingId);
     if(i>=0) records[i]=currentEntry; else records.push(currentEntry);
@@ -1240,6 +1267,9 @@ function renderShonDrum(){
 }
 // Бүртгэсэн шонг дарахад төрлийг сонгох / устгах цонх нээнэ
 let poleSheetIdx=-1;
+// Пикет өөрчлөгдөх бүрт цагийг тэмдэглэнэ — нэгтгэхэд пикет тус бүрээр
+// аль төхөөрөмжийн ажил шинэ болохыг ялгахад хэрэглэнэ.
+function touchPk(pk){ if(pk) pk.updatedAt=Date.now(); }
 function shonRefreshAll(){
   saveShonData(); renderShonDrum(); renderShonStats(); renderShonPkStrip();
   updateShonHdr(); renderShonSummary(); updateShonPkNav();
@@ -1262,21 +1292,21 @@ function closePoleSheet(){ poleSheetIdx=-1; document.getElementById('poleSheet')
 function poleSheetSet(type){
   if(poleSheetIdx<0) return;
   const pk=getShonEntry(shonKm,shonSide).pks[shonPkIdx];
-  pk.poles[poleSheetIdx]=type;
+  pk.poles[poleSheetIdx]=type; touchPk(pk);
   closePoleSheet(); shonRefreshAll();
   showToast(SHON_INFO[type].label+' болголоо ✓');
 }
 function poleSheetDelete(){
   if(poleSheetIdx<0) return;
   const pk=getShonEntry(shonKm,shonSide).pks[shonPkIdx];
-  pk.poles.splice(poleSheetIdx,1);
+  pk.poles.splice(poleSheetIdx,1); touchPk(pk);
   closePoleSheet(); shonRefreshAll();
   showToast('Шон устгагдлаа');
 }
 function shonRegister(type){
   if(!shonKm){ showToast('КМ оруулна уу'); return; }
   const pk=getShonEntry(shonKm,shonSide).pks[shonPkIdx];
-  pk.poles.push(type);
+  pk.poles.push(type); touchPk(pk);
   saveShonData(); renderShonDrum(); renderShonStats(); renderShonPkStrip(); updateShonHdr(); renderShonSummary(); updateShonPkNav();
   if(navigator.vibrate) navigator.vibrate(25);
 }
@@ -1284,7 +1314,7 @@ function shonUndo(){
   if(!shonKm) return;
   const pk=getShonEntry(shonKm,shonSide).pks[shonPkIdx];
   if(!pk.poles.length) return;
-  const removed=SHON_INFO[pk.poles.pop()];
+  const removed=SHON_INFO[pk.poles.pop()]; touchPk(pk);
   saveShonData(); renderShonDrum(); renderShonStats(); renderShonPkStrip(); updateShonHdr(); renderShonSummary(); updateShonPkNav();
   showToast(removed.label+' буцааллаа');
 }
@@ -1627,6 +1657,37 @@ const DEVICE_ID = (()=>{
   return id;
 })();
 
+// ── ТӨХӨӨРӨМЖИЙН НЭР ────────────────────────────────────
+// Менежер хэн ямар бүртгэл илгээснийг харахын тулд.
+// Нэр өгсөн бол Firebase дэх зангилааны түлхүүр нэр болно — ингэснээр
+// хэрэглэгч браузераа цэвэрлэсэн ч ижил нэр оруулаад өгөгдлөө олно.
+function getDevName(){ return (localStorage.getItem('th_devname')||'').trim(); }
+function syncKey(){
+  const n=getDevName();
+  if(!n) return DEVICE_ID;
+  // Firebase түлхүүрт . $ # [ ] / болон удирдах тэмдэгт байж болохгүй
+  const safe=n.replace(/[.$#\[\]\/\x00-\x1f\x7f]/g,'_').slice(0,60).trim();
+  return safe||DEVICE_ID;
+}
+function editDevName(){
+  const cur=getDevName();
+  const v=prompt('Таны нэр / төхөөрөмжийн нэр:\n\nМенежер хэн ямар бүртгэл илгээснийг эндээс харна.\nНэрээ солиход хуучин өгөгдөл алдагдахгүй.',cur||'');
+  if(v===null) return;
+  localStorage.setItem('th_devname',v.trim());
+  renderSyncCard();
+  if(v.trim()){ showToast('Нэр хадгалагдлаа ✓'); if(navigator.onLine) fbPush(); }
+}
+function renderSyncCard(){
+  const nEl=document.getElementById('syncName'), sEl=document.getElementById('syncSub');
+  if(!nEl||!sEl) return;
+  const name=getDevName();
+  nEl.textContent = name ? ('👤 '+name) : '👤 Нэрээ оруулна уу';
+  const cnt=`${records.length} бүртгэл · ${Object.keys(shonData||{}).length} КМ судалгаа`;
+  const ls=+localStorage.getItem('th_lastsync')||0;
+  sEl.textContent = ls ? `${cnt} · сүүлд илгээсэн ${new Date(ls).toLocaleString('mn-MN')}`
+                       : `${cnt} · хараахан илгээгээгүй`;
+}
+
 // Firebase SDK-г CDN-ээс динамикаар ачаална
 let _fbInitPromise=null;
 function initFirebase(){
@@ -1675,6 +1736,68 @@ function showFbStatus(msg,color){
   fbStatusTimer=setTimeout(()=>{ el.style.opacity='0'; },2500);
 }
 
+// ── НЭГТГЭХ ЛОГИК ───────────────────────────────────────
+// Гол зарчим: нэгтгэхэд өгөгдөл ЗӨВХӨН НЭМЭГДЭНЭ, хэзээ ч цөөрөхгүй.
+// Цаг тэнцсэн эсвэл мэдэгдэхгүй үед агуулга илүүтэйг нь сонгоно.
+
+// Бүртгэлд хэдэн шалгуур бөглөгдсөнийг тоолно
+function recFilled(r){
+  if(!r||!r.vals) return 0;
+  return r.vals.reduce((s,arr)=>s+((arr||[]).filter(v=>v>0).length),0);
+}
+// Хоёр бүртгэлээс алийг нь үлдээхийг шийднэ
+function pickNewerRecord(a,b){
+  if(!a) return b;
+  if(!b) return a;
+  const ta=+a.updatedAt||0, tb=+b.updatedAt||0;
+  if(ta!==tb) return ta>tb?a:b;                 // 1) мс цаг
+  const da=a.date||'', db=b.date||'';
+  if(da!==db) return da>db?a:b;                 // 2) хуучин өгөгдөлд өдрийн мөр
+  return recFilled(a)>=recFilled(b)?a:b;        // 3) тэнцвэл илүү бөглөсныг нь
+}
+// Хоёр пикетээс алийг нь үлдээхийг шийднэ
+function pickNewerPk(a,b){
+  const pa=(a&&a.poles)||[], pb=(b&&b.poles)||[];
+  if(!pa.length) return b||a||{poles:[]};
+  if(!pb.length) return a;
+  const ta=+(a&&a.updatedAt)||0, tb=+(b&&b.updatedAt)||0;
+  if(ta!==tb) return ta>tb?a:b;
+  return pa.length>=pb.length?a:b;               // тэнцвэл шон олонтойг нь
+}
+// Нэг КМ+талын судалгааг ПИКЕТ ТУС БҮРЭЭР нэгтгэнэ.
+// (Өмнө нь Object.assign-аар бүтэн КМ солигдож, өөр хүний пикетүүд алга болдог байсан.)
+function mergeShonEntry(a,b){
+  if(!a) return b;
+  if(!b) return a;
+  const out={km:(a.km!==undefined?a.km:b.km), side:a.side||b.side, pks:[]};
+  for(let i=0;i<10;i++) out.pks[i]=pickNewerPk((a.pks||[])[i],(b.pks||[])[i])||{poles:[]};
+  return out;
+}
+
+// ── НӨӨЦЛӨЛТ ────────────────────────────────────────────
+// Нэгтгэхийн өмнө локал өгөгдлийн хуулбарыг үлдээнэ. Нэгтгэл таалагдаагүй бол буцаана.
+function backupLocal(){
+  try{
+    localStorage.setItem('th_bak', JSON.stringify({
+      at: Date.now(),
+      r: localStorage.getItem('th_r')||'[]',
+      shon: localStorage.getItem('th_shon')||'{}'
+    }));
+    return true;
+  }catch(e){ return false; }
+}
+function restoreBackup(){
+  let bak=null;
+  try{ bak=JSON.parse(localStorage.getItem('th_bak')||'null'); }catch(e){}
+  if(!bak){ showToast('Нөөц хуулбар байхгүй байна'); return; }
+  const when=new Date(bak.at).toLocaleString('mn-MN');
+  if(!confirm(`${when}-д хийсэн нэгтгэлийг буцаах уу?\n\nТэр үеийн өгөгдөл рүү эргэж очно.`)) return;
+  localStorage.setItem('th_r', bak.r);
+  localStorage.setItem('th_shon', bak.shon);
+  loadAll(); loadShon(); renderHome(); renderShonHomePill(); renderSyncCard();
+  showToast('Нэгтгэлийн өмнөх төлөв рүү буцлаа ✓');
+}
+
 // Өгөгдлийг Firebase руу push (records + shonData)
 async function fbPush(){
   if(!navigator.onLine) return;
@@ -1686,9 +1809,12 @@ async function fbPush(){
       records: JSON.parse(localStorage.getItem('th_r')||'[]'),
       shon:    JSON.parse(localStorage.getItem('th_shon')||'{}'),
       updatedAt: Date.now(),
-      deviceId: DEVICE_ID
+      deviceId: DEVICE_ID,
+      deviceName: getDevName()||DEVICE_ID
     };
-    await fbDb.ref('surveys/'+DEVICE_ID).set(data);
+    await fbDb.ref('surveys/'+syncKey()).set(data);
+    localStorage.setItem('th_lastsync',String(Date.now()));
+    renderSyncCard();
     showFbStatus('☁️ Хадгалагдлаа','#16a34a');
   }catch(e){ showFbStatus('⚠️ Sync алдаа','#dc2626'); }
   fbSyncing=false;
@@ -1705,16 +1831,40 @@ async function fbPullAll(){
     const all=snap.val()||{};
     const devices=Object.keys(all);
     if(!devices.length){ showToast('Firebase дээр өгөгдөл байхгүй'); return; }
-    // Бүх device-н records нэгтгэх (давхардлыг km+side-аар шийднэ)
+
+    // Нэгтгэхийн өмнө локал төлөвөө нөөцөлнө (буцаах боломжтой байлгах)
+    backupLocal();
+    loadAll(); loadShon();
+
+    // ЛОКАЛ ӨГӨГДӨЛ СУУРЬ болно — үүнийг солихгүй, зөвхөн дээр нь нэмнэ
     const merged={};
+    records.forEach(r=>{ if(r&&r.km!==undefined) merged[r.km+'|'+r.side]=r; });
     const mergedShon={};
+    Object.keys(shonData||{}).forEach(k=>{ mergedShon[k]=shonData[k]; });
+
+    let addedR=0, updatedR=0, addedS=0, updatedS=0;
+    const names=[];
     devices.forEach(devId=>{
-      const d=all[devId];
-      if(d.records) d.records.forEach(r=>{
+      const d=all[devId]||{};
+      names.push(d.deviceName||devId);
+      (d.records||[]).forEach(r=>{
+        if(!r||r.km===undefined) return;
         const key=r.km+'|'+r.side;
-        if(!merged[key]||r.date>merged[key].date) merged[key]=r;
+        const cur=merged[key];
+        if(!cur){ merged[key]=r; addedR++; return; }
+        const win=pickNewerRecord(cur,r);
+        if(win!==cur){ merged[key]=win; updatedR++; }
       });
-      if(d.shon) Object.assign(mergedShon, d.shon);
+      Object.keys(d.shon||{}).forEach(k=>{
+        const remote=d.shon[k];
+        if(!remote) return;
+        const cur=mergedShon[k];
+        if(!cur){ mergedShon[k]=remote; addedS++; return; }
+        const before=JSON.stringify(cur);
+        const out=mergeShonEntry(cur,remote);
+        mergedShon[k]=out;
+        if(JSON.stringify(out)!==before) updatedS++;
+      });
     });
     records=Object.values(merged);
     shonData=mergedShon;
@@ -1722,8 +1872,14 @@ async function fbPullAll(){
     saveShonData();
     renderHome();
     renderShonHomePill();
-    showToast(`✅ ${devices.length} төхөөрөмжийн өгөгдөл нэгдлээ (${records.length} бүртгэл)`);
-    showFbStatus(`✅ ${devices.length} device нэгдлээ`,'#16a34a');
+    renderSyncCard();
+    alert(`✅ ${devices.length} төхөөрөмжийн өгөгдөл нэгдлээ\n\n`+
+          `Эрсдэлийн бүртгэл:  +${addedR} шинэ, ${updatedR} шинэчлэгдсэн\n`+
+          `Шон судалгаа (КМ):  +${addedS} шинэ, ${updatedS} шинэчлэгдсэн\n\n`+
+          `Нийт: ${records.length} бүртгэл, ${Object.keys(shonData).length} КМ судалгаа\n\n`+
+          `Илгээсэн: ${names.join(', ')}\n\n`+
+          `Таны өмнөх өгөгдөл хэвээр байгаа. Буцаах бол "↩️ Нэгтгэлийг буцаах" дарна уу.`);
+    showFbStatus(`✅ ${devices.length} төхөөрөмж нэгдлээ`,'#16a34a');
   }catch(e){ showFbStatus('⚠️ Татах алдаа: '+e.message,'#dc2626'); }
 }
 
@@ -1742,20 +1898,12 @@ function fbSyncLater(){
 window.addEventListener('online',()=>{ showFbStatus('🌐 Интернэт холбогдлоо','#2D6A4F'); fbPush(); });
 window.addEventListener('offline',()=>{ showFbStatus('📵 Офлайн горим','#d97706'); });
 
-// Менежерийн товч home-д нэмэх
+// Менежерийн горим: URL-д ?manager байвал нэгтгэх мөрийг харуулна
 function renderManagerBtn(){
-  const existing=document.getElementById('managerBtn');
-  if(existing) return;
-  const btn=document.createElement('button');
-  btn.id='managerBtn';
-  btn.innerHTML='👥 Бүгдийн өгөгдөл татах';
-  btn.style.cssText='position:fixed;top:60px;left:0;right:0;margin:6px 14px 0;height:40px;border-radius:10px;background:#2D6A4F;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;z-index:150;display:none';
-  btn.onclick=fbPullAll;
-  document.body.appendChild(btn);
-  // Менежерийн горим: URL-д ?manager байвал товч харуулна
   if(location.search.includes('manager')||location.hash.includes('manager')){
-    btn.style.display='block';
-    document.querySelector('.hdr-sub').textContent='ПЧ-3 · МЕНЕЖЕРИЙН ГОРИМ 👔';
+    document.getElementById('mgrBar')?.classList.add('show');
+    const sub=document.querySelector('.hdr-sub');
+    if(sub) sub.textContent='ПЧ-3 · МЕНЕЖЕРИЙН ГОРИМ 👔';
   }
 }
 
@@ -1769,7 +1917,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
 
 // INIT
 loadAll(); loadShon(); renderHome(); renderShonHomePill(); checkInstallPrompt();
-renderManagerBtn();
+renderManagerBtn(); renderSyncCard();
 // Эхлэхэд автомат push
 if(navigator.onLine) setTimeout(fbPush, 2000);
 </script>
