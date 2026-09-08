@@ -1,9 +1,29 @@
 // Торон Хашааны Эрсдэл — офлайн кэш
 // Сүлжээг эхэлж оролдоод, амжилтгүй бол кэшээс өгнө (network-first, cache fallback).
 // Ингэснээр талбай дээр интернэтгүй үед апп бүрэн ажиллана.
-const CACHE = 'toron-v1';
+const CACHE = 'toron-v2';
 
-self.addEventListener('install', e => { self.skipWaiting(); });
+// Суулгах үед үндсэн файлуудыг урьдчилан кэшлэнэ.
+// Ингэснээр апп анх суусны дараа шууд офлайн ажиллах бөгөөд
+// Chrome-ын "суулгах боломжтой" шалгуурыг найдвартай хангана.
+const CORE = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-512.png',
+  './apple-touch-icon.png'
+];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE)
+      // Аль нэг файл татагдахгүй бол бүхэлд нь унагахгүй
+      .then(c => Promise.all(CORE.map(u => c.add(u).catch(() => {}))))
+      .then(() => self.skipWaiting())
+  );
+});
 
 self.addEventListener('activate', e => {
   e.waitUntil(
