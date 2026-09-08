@@ -3,12 +3,30 @@
     ".read": false,
     ".write": false,
 
+    "names": {
+      ".read": "auth != null",
+
+      "$nameKey": {
+        ".write": "auth != null && (!data.exists() || data.child('deviceId').val() === newData.child('deviceId').val() || auth.token.email === 'admin@toronhashaa.mn')",
+
+        ".validate": "newData.hasChildren(['name','deviceId','claimedAt']) && $nameKey.length <= 64",
+
+        "name":      { ".validate": "newData.isString() && newData.val().length <= 64" },
+        "deviceId":  { ".validate": "newData.isString() && newData.val().length <= 64" },
+        "claimedAt": { ".validate": "newData.isNumber()" },
+
+        "$other": { ".validate": false }
+      }
+    },
+
     "surveys": {
-      ".read": true,
+      ".read": "auth != null && auth.token.email === 'admin@toronhashaa.mn'",
       ".write": false,
 
       "$device": {
-        ".write": "newData.exists() && (!data.exists() || newData.child('updatedAt').val() >= data.child('updatedAt').val())",
+        ".read": "auth != null",
+
+        ".write": "auth != null && newData.exists() && (!data.exists() || newData.child('updatedAt').val() >= data.child('updatedAt').val())",
 
         ".validate": "newData.hasChild('updatedAt') && $device.length <= 64",
 
