@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#1B4332">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Торон Эрсдэл">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Торон Эрсдэл">
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22%D0%A2%D0%BE%D1%80%D0%BE%D0%BD%20%D0%A5%D0%B0%D1%88%D0%B0%D0%B0%D0%BD%D1%8B%20%D0%AD%D1%80%D1%81%D0%B4%D1%8D%D0%BB%22,%22short_name%22:%22%D0%A2%D0%BE%D1%80%D0%BE%D0%BD%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23F2F0EB%22,%22theme_color%22:%22%231B4332%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20fill='%231B4332'%20rx='20'/%3E%3Ctext%20y='.9em'%20font-size='80'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22}]}">
+<title>Торон Хашааны Эрсдэл</title>
+<script>
+/* xlsx-js-style 1.2.0-beta @ 2022-04-05T01:40:40.843Z */
+var XLSX={};function make_xlsx_lib(a){a.version="0.18.5",a.style_version="1.2.0";var re,f=1200,_=1252;"undefined"!=typeof cptable?re=cptable:"undefined"!=typeof module&&"undefined"!=typeof require&&(re=require("./cpexcel.js"));var t=[874,932,936,949,950,1250,1251,1252,1253,1254,1255,1256,1257,1258,1e4],l={0:1252,1:65001,2:65001,77:1e4,128:932,129:949,130:1361,134:936,136:950,161:1253,162:1254,163:1258,177:1255,178:1256,186:1257,204:1251,222:874,238:1250,255:1252,69:6969},c=function(e){-1!=t.indexOf(e)&&(_=l[0]=e)};var ie=function(e){c(f=e)};function h(){ie(1200),c(1252)}function ae(e){for(var t=[],r=0,a=e.length;r<a;++r)t[r]=e.charCodeAt(r);return t}function s(e){for(var t=[],r=0;r<e.length>>1;++r)t[r]=String.fromCharCode(e.charCodeAt(2*r+1)+(e.charCodeAt(2*r)<<8));return t.join("")}var ne=function(e){var t=e.charCodeAt(0),r=e.charCodeAt(1);return 255==t&&254==r?function(e){for(var t=[],r=0;r<e.length>>1;++r)t[r]=String.fromCharCode(e.charCodeAt(2*r)+(e.charCodeAt(2*r+1)<<8));return t.join("")}(e.slice(2)):254==t&&255==r?s(e.slice(2)):65279==t?e.slice(1):e},u=function(e){return String.fromCharCode(e)},n=function(e){return String.fromCharCode(e)};void 0!==re&&(ie=function(e){c(f=e)},ne=function(e){return 255===e.charCodeAt(0)&&254===e.charCodeAt(1)?re.utils.decode(1200,ae(e.slice(2))).replace(/\0/g,""):e},u=function(e){return 1200===f?String.fromCharCode(e):re.utils.decode(f,[255&e,e>>8])[0]},n=function(e){return re.utils.decode(_,[e])[0]});function Ge(e,t){for(var r="";r.length<t;)r+=e;return r}function o(e){if("undefined"==typeof ArrayBuffer)return he(e);for(var t=new ArrayBuffer(e.length),r=new Uint8Array(t),a=0;a!=e.length;++a)r[a]=255&e.charCodeAt(a);return t}function i(e){if(Array.isArray(e))return e.map(function(e){return String.fromCharCode(e)}).join("");for(var t=[],r=0;r<e.length;++r)t[r]=String.fromCharCode(e[r]);return t.join("")}var p="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";function ee(e){for(var t,r,a,n,s,i="",o=0,c=0,l=0;l<e.length;)n=(t=e.charCodeAt(l++))>>2,s=(3&t)<<4|(r=e.charCodeAt(l++))>>4,o=(15&r)<<2|(a=e.charCodeAt(l++))>>6,c=63&a,isNaN(r)?o=c=64:isNaN(a)&&(c=64),i+=p.charAt(n)+p.charAt(s)+p.charAt(o)+p.charAt(c);return i}function te(e){var t,r,a,n,s,i,o="";e=e.replace(/[^\w\+\/\=]/g,"");for(var c=0;c<e.length;)t=p.indexOf(e.charAt(c++))<<2|(n=p.indexOf(e.charAt(c++)))>>4,o+=String.fromCharCode(t),r=(15&n)<<4|(s=p.indexOf(e.charAt(c++)))>>2,64!==s&&(o+=String.fromCharCode(r)),a=(3&s)<<6|(i=p.indexOf(e.charAt(c++))),64!==i&&(o+=String.fromCharCode(a));return o}var se="undefined"!=typeof Buffer&&"undefined"!=typeof process&&void 0!==process.versions&&!!process.versions.node,ce=function(){if("undefined"==typeof Buffer)return function(){};var t=!Buffer.from;if(!t)try{Buffer.from("foo","utf8")}catch(e){t=!0}return t?function(e,t){return t?new Buffer(e,t):new Buffer(e)}:Buffer.from.bind(Buffer)}();function le(e){return se?Buffer.alloc?Buffer.alloc(e):new Buffer(e):new("undefined"!=typeof Uint8Array?Uint8Array:Array)(e)}function fe(e){return se?Buffer.allocUnsafe?Buffer.allocUnsafe(e):new Buffer(e):new("undefined"!=typeof Uint8Array?Uint8Array:Array)(e)}var he=function(e){return se?ce(e,"binary"):e.split("").map(function(e){return 255&e.charCodeAt(0)})};var ue=se?function(e){return Buffer.concat(e.map(function(e){return Buffer.isBuffer(e)?e:ce(e)}))}:function(e){if("undefined"==typeof Uint8Array)return[].concat.apply([],e.map(function(e){return Array.isArray(e)?e:[].slice.call(e)}));for(var t=0,r=0,t=0;t<e.length;++t)r+=e[t].length;for(var a,n=new Uint8Array(r),r=t=0;t<e.length;r+=a,++t)if(a=e[t].length,e[t]instanceof Uint8Array)n.set(e[t],r);else{if("string"==typeof e[t])throw"wtf";n.set(new Uint8Array(e[t]),r)}return n};function Er(e){return Array.isArray(e)||"undefined"!=typeof Uint8Array&&e instanceof Uint8Array}function Lr(e){var t=le(e);return t.l=0,t.read_shift=Cr,t.chk=Fr,t.write_shift=Nr,t}function Cr(e,t){return 0}function Fr(e,t){}function Nr(e,t,r){}function Jt(e){if(se&&Buffer.isBuffer(e))return e.toString("utf8");if("string"==typeof e)return e;throw new Error("Bad input format")}function qr(e,t){return void 0===t||"number"==typeof t?e.s.r===e.e.r&&e.s.c===e.e.c?Kr(e.s):Kr(e.s)+":"+Kr(e.e):Kr(e)+":"+Kr(t)}function Kr(e){for(var t=e.c+1,r="";t;t=(t-1)/26|0)r=String.fromCharCode((t-1)%26+65)+r;return r+(e.r+1)}function Jr(e){var t=e.indexOf(":");return-1==t?{s:Yr(e),e:Yr(e)}:{s:Yr(e.slice(0,t)),e:Yr(e.slice(t+1))}}function Yr(e){for(var t=0,r=0,a=0,n=e.length,r=0;a<n&&!((t=e.charCodeAt(a)-64)<1||26<t);++a)r=26*r+t;for(t=0;a<n&&!((t=e.charCodeAt(a)-48)<0||9<t);++a)r=10*(r-1)+t+1;return{r:r-1,c:(r=0,a=0,r)}}function Zr(e){for(var t={s:{c:0,r:0},e:{c:0,r:0}},r=0,a=0,n=0,s=e.length,r=0;a<s&&!((n=e.charCodeAt(a)-64)<1||26<n);++a)r=26*r+n;for(t.s.c=--r,r=0;a<s&&!((n=e.charCodeAt(a)-48)<0||9<n);++a)r=10*r+n;if(t.s.r=--r,a===s||10!=n)return t.e.c=t.s.c,t.e.r=t.s.r,t;for(++a,r=0;a!=s&&!((n=e.charCodeAt(a)-64)<1||26<n);++a)r=26*r+n;for(t.e.c=--r,r=0;a!=s&&!((n=e.charCodeAt(a)-48)<0||9<n);++a)r=10*r+n;return t.e.r=--r,t}var me={0:"General",14:"m/d/yy"};function ve(e,t){return""+t}function De(e,t){var r=e.getTime();return(r-new Date(1899,11,30,0,0,0).getTime())/864e5}function He(e){return new Date(e)}function we(e,t){}function Te(e){}function Ee(){} 
+function Ve(e){if("undefined"!=typeof JSON&&!Array.isArray(e))return JSON.parse(JSON.stringify(e));if("object"!=typeof e||null==e)return e;if(e instanceof Date)return new Date(e.getTime());var t,r={};for(t in e)Object.prototype.hasOwnProperty.call(e,t)&&(r[t]=Ve(e[t]));return r}
+function ea(e,t,r){return null==e||null==e.t||"z"==e.t?"":void 0!==e.w?e.w:""+e.v}
+function Ce(e,t,r){var a="utf8"==r?t:t;if("undefined"!=typeof Blob){a=new Blob([typeof t=="string"?new TextEncoder().encode(t):t],{type:"application/octet-stream"});if("undefined"!=typeof URL&&"undefined"!=typeof document&&document.createElement&&URL.createObjectURL){var n=URL.createObjectURL(a),s=document.createElement("a");s.download=e,s.href=n,document.body.appendChild(s),s.click(),document.body.removeChild(s),URL.revokeObjectURL&&setTimeout(function(){URL.revokeObjectURL(n)},6e4)}}else throw new Error("cannot save file "+e)}
+var Xr=function(e){if(e<0)throw new Error("invalid column "+e);var t="";for(++e;e;e=Math.floor((e-1)/26))t=String.fromCharCode((e-1)%26+65)+t;return t};
+var Yt=function(e,t,r){return"<"+e+(null!=r?Object.keys(r).map(function(e){return" "+e+'="'+r[e]+'"'}).join(""):"")+(null!=t?">"+t+"</"+e:"/")+">"};
+var D=function(e){return""+e};
+var getRisk,CRITERIA,SC,RISK_FILLS,RISK_FONTS;
+</script>
+<script>
+// Minimal XLSX shim — real xlsx-js-style loaded below via full bundle
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --forest:#1B4332;--forest2:#2D6A4F;--forest3:#40916C;--forest-lite:#e8f5ee;
+  --bark:#8B5E3C;--bg:#F2F0EB;--card:#fff;--text:#1a1a1a;--muted:#6b7280;--border:#e0dcd4;
+  --s0:#94a3b8;--s0b:#f1f5f9;--s1:#16a34a;--s1b:#dcfce7;--s2:#65a30d;--s2b:#ecfccb;
+  --s3:#d97706;--s3b:#fef3c7;--s4:#ea580c;--s4b:#ffedd5;--s5:#dc2626;--s5b:#fee2e2;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+*{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
+input,button,select{-webkit-appearance:none;font-family:inherit}
+.pk-strip,.shon-drum-scroll,.session-list{-webkit-overflow-scrolling:touch}
+body{padding-bottom:env(safe-area-inset-bottom,0px)}
+.save-bar{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.fab{bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+.export-btn{bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+.sess-inp{font-size:16px !important}
+.field-input{font-size:16px !important}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.hdr{background:var(--forest);color:#fff;padding:12px 16px 10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.hdr-row{display:flex;align-items:center;gap:10px}
+.hdr-icon{font-size:22px}.hdr-title{font-size:17px;font-weight:700}.hdr-sub{font-size:11px;opacity:.75;margin-top:1px}
+.screen{display:none;padding-bottom:90px}.screen.active{display:block}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 14px 0}
+.stat-card{background:var(--card);border-radius:12px;padding:12px 14px;border:1px solid var(--border)}
+.stat-num{font-size:28px;font-weight:700;color:var(--forest2)}.stat-label{font-size:11px;color:var(--muted);margin-top:2px}
+.risk-bar{padding:10px 14px 0}
+.risk-bar-inner{background:var(--card);border-radius:12px;padding:12px;border:1px solid var(--border)}
+.risk-bar-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.risk-chips{display:flex;gap:4px;flex-wrap:wrap}
+.risk-chip{flex:1;min-width:50px;padding:6px 4px;border-radius:8px;text-align:center;font-size:10px;font-weight:600}
+.section-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding:12px 14px 6px}
+.session-card{background:var(--card);border-radius:14px;border:1px solid var(--border);margin:0 14px;overflow:hidden}
+.session-hdr{background:var(--forest-lite);padding:10px 14px;border-bottom:1px solid #c8e6d4;display:flex;align-items:center;justify-content:space-between}
+.session-hdr-title{font-size:13px;font-weight:700;color:var(--forest)}
+.session-add{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sess-inp{height:36px;border:1.5px solid var(--border);border-radius:8px;padding:0 10px;font-size:14px;font-weight:700;color:var(--text);font-family:inherit;width:72px;text-align:center}
+.sess-inp:focus{outline:none;border-color:var(--forest3)}
+.sess-sep{font-size:13px;font-weight:600;color:var(--muted)}
+.sess-side-grp{display:flex;gap:4px}
+.sess-side{padding:0 10px;height:36px;border:1.5px solid var(--border);border-radius:8px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:var(--muted);transition:.12s}
+.sess-side.ab{border-color:var(--forest);background:var(--forest);color:#fff}
+.sess-side.az{border-color:var(--bark);background:var(--bark);color:#fff}
+.sess-side.ah{border-color:var(--forest3);background:var(--forest3);color:#fff}
+.sess-add-btn{height:36px;padding:0 14px;border-radius:8px;background:var(--forest2);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sess-add-btn:active{opacity:.8}
+.session-list{max-height:220px;overflow-y:auto}
+.sess-item{display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);gap:8px;cursor:pointer}
+.sess-item:last-child{border-bottom:none}
+.sess-item:active{background:var(--bg)}
+.sess-item-km{font-size:18px;font-weight:800;color:var(--forest);min-width:44px}
+.sess-item-side{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
+.ss-b{background:var(--forest);color:#fff}.ss-z{background:var(--bark);color:#fff}
+.sess-item-status{margin-left:auto;font-size:18px}
+.sess-item-del{background:none;border:none;font-size:16px;cursor:pointer;color:var(--muted);padding:2px 4px}
+.sess-empty{text-align:center;padding:16px;color:var(--muted);font-size:12px}
+.sess-start-wrap{padding:10px 14px;background:var(--forest-lite);border-top:1px solid #c8e6d4}
+.sess-start-btn{width:100%;height:42px;border-radius:10px;background:var(--forest);color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer}
+.sess-start-btn:active{opacity:.85}
+.sess-start-btn:disabled{opacity:.4;pointer-events:none}
+.record-list{padding:0 14px;display:flex;flex-direction:column;gap:8px}
+.record-card{background:var(--card);border-radius:12px;padding:10px 14px;border:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer}
+.record-card:active{transform:scale(.98)}
+.record-km{font-size:20px;font-weight:800;color:var(--forest);min-width:52px}
+.record-side{font-size:11px;font-weight:600;color:var(--muted)}
+.record-mid{flex:1}
+.record-date{font-size:11px;color:var(--muted);margin-top:2px}
+.record-badge{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.record-score{font-size:11px;text-align:right;margin-top:2px;color:var(--muted)}
+.record-del{background:none;border:none;font-size:17px;padding:4px;cursor:pointer;color:var(--muted);flex-shrink:0}
+.empty{text-align:center;padding:40px 30px;color:var(--muted)}
+.empty-icon{font-size:50px;margin-bottom:10px}.empty-text{font-size:14px;font-weight:600}
+.empty-sub{font-size:12px;margin-top:5px;line-height:1.5}
+.fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:var(--forest2);color:#fff;border:none;font-size:26px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;z-index:200}
+.fab:active{transform:scale(.91)}
+.export-btn{position:fixed;bottom:20px;left:20px;padding:0 16px;height:46px;border-radius:23px;background:var(--bark);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2);display:flex;align-items:center;gap:5px;z-index:200}
+.score-hdr{background:var(--forest);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.score-hdr-label{font-size:11px;opacity:.7}
+.score-hdr-num{font-size:26px;font-weight:800;line-height:1}
+.score-hdr-max{font-size:13px;opacity:.6}
+.risk-pill{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.km-bar{background:var(--forest-lite);border-bottom:1px solid #c8e6d4;padding:7px 10px;display:flex;align-items:center;gap:7px}
+.km-nav-btn{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--forest3);background:#fff;color:var(--forest);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.1s}
+.km-nav-btn:active{background:var(--forest);color:#fff}
+.km-nav-btn:disabled{opacity:.25;pointer-events:none}
+.km-center{flex:1;display:flex;align-items:center;gap:7px;justify-content:center}
+.km-input{width:88px;height:38px;border:1.5px solid var(--forest3);border-radius:10px;padding:0 8px;font-size:18px;font-weight:700;color:var(--forest);text-align:center;background:#fff;font-family:inherit}
+.km-input:focus{outline:none;border-color:var(--forest)}
+.side-toggle{display:flex;border-radius:10px;overflow:hidden;border:1.5px solid var(--border)}
+.side-btn{padding:0 12px;height:38px;border:none;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:var(--muted);transition:.15s}
+.side-btn.ab{background:var(--forest);color:#fff}
+.side-btn.az{background:var(--bark);color:#fff}
+.sess-prog{font-size:10px;font-weight:700;background:var(--forest);color:#fff;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.pk-strip{background:#fff;border-bottom:1px solid var(--border);padding:6px 10px;display:flex;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;align-items:center}
+.pk-strip::-webkit-scrollbar{display:none}
+.pk-tab{flex-shrink:0;width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:.15s;position:relative}
+.pk-tab.active{width:52px;height:44px;border-color:var(--forest);background:var(--forest);color:#fff;font-size:16px;font-weight:900;border-radius:11px;box-shadow:0 2px 8px rgba(27,67,50,.3)}
+.pk-tab.filled{border-color:var(--forest3);color:var(--forest3)}
+.pk-tab.done{border-color:var(--forest2);background:var(--forest-lite)}
+.pk-dot{position:absolute;bottom:3px;right:3px;width:5px;height:5px;border-radius:50%;background:var(--forest3);display:none}
+.pk-tab.filled .pk-dot,.pk-tab.done .pk-dot{display:block}
+.pk-big-label{background:#fff;border-bottom:1px solid var(--border);padding:5px 14px;display:flex;align-items:center;gap:8px}
+.pk-big-num{font-size:24px;font-weight:900;color:var(--forest);line-height:1}
+.pk-big-sub{font-size:11px;color:var(--muted)}
+.pk-big-prog{margin-left:auto;font-size:11px;font-weight:600;color:var(--muted)}
+.crit-outer{margin:8px 14px 0;border-radius:16px;border:1.5px solid var(--border);background:var(--card);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);touch-action:pan-y}
+.crit-track{display:flex;width:1000%;will-change:transform;transition:transform .25s cubic-bezier(.25,.46,.45,.94)}
+.crit-slide{flex:0 0 10%;padding:13px 14px 10px}
+.slide-hdr{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px}
+.slide-badge{background:var(--forest);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.slide-name{font-size:13px;font-weight:700;flex:1;line-height:1.3;color:var(--text)}
+.score-opts{display:flex;flex-direction:column;gap:6px}
+.score-opt{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;border:2px solid var(--border);background:#fff;cursor:pointer;transition:.1s;text-align:left;width:100%;font-family:inherit}
+.score-opt:active{transform:scale(.97)}
+.score-opt-num{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.score-opt-lbl{font-size:12px;font-weight:600;line-height:1.3;color:var(--text);flex:1}
+.score-opt.sel0{border-color:#64748b!important;border-style:dashed!important;background:#e2e8f0!important}
+.score-opt.sel1{border-color:var(--s1);background:var(--s1b)}
+.score-opt.sel2{border-color:var(--s2);background:var(--s2b)}
+.score-opt.sel3{border-color:var(--s3);background:var(--s3b)}
+.score-opt.sel4{border-color:var(--s4);background:var(--s4b)}
+.score-opt.sel5{border-color:var(--s5);background:var(--s5b)}
+.crit-nav{display:flex;align-items:center;gap:8px;padding:5px 14px 2px}
+.crit-nav-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);color:var(--forest);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.12s}
+.crit-nav-btn:active{background:var(--forest);color:#fff}
+.crit-nav-btn:disabled{opacity:.2;pointer-events:none}
+.crit-dots{flex:1;display:flex;justify-content:center;gap:5px;align-items:center}
+.c-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:.2s;flex-shrink:0;cursor:pointer}
+.c-dot.active{background:var(--forest);width:16px;border-radius:3px}
+.c-dot.filled{background:var(--forest3)}
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:10px 14px;display:flex;gap:8px;z-index:200}
+.btn-save{flex:1;height:46px;border-radius:10px;background:var(--forest);color:#fff;border:none;font-size:15px;font-weight:700;cursor:pointer}
+.btn-save:active{background:var(--forest2)}
+.btn-cancel{width:80px;height:46px;border-radius:10px;background:var(--bg);color:var(--muted);border:1.5px solid var(--border);font-size:14px;font-weight:600;cursor:pointer}
+.advance-overlay{position:fixed;inset:0;background:rgba(27,67,50,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;opacity:0;pointer-events:none;transition:opacity .3s}
+.advance-overlay.show{opacity:1;pointer-events:auto}
+.adv-box{background:#fff;border-radius:20px;padding:28px 24px;text-align:center;min-width:240px}
+.adv-check{font-size:48px;margin-bottom:8px}
+.adv-title{font-size:18px;font-weight:800;color:var(--forest);margin-bottom:4px}
+.adv-sub{font-size:13px;color:var(--muted)}
+.adv-next{margin-top:16px;font-size:22px;font-weight:900;color:var(--forest2)}
+.install-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .3s}
+.install-overlay.show{opacity:1;pointer-events:auto}
+.install-box{background:#fff;width:100%;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));animation:slideUp .3s ease-out}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:none}}
+.install-icon{font-size:48px;text-align:center;margin-bottom:8px}
+.install-title{font-size:18px;font-weight:800;color:var(--forest);text-align:center;margin-bottom:4px}
+.install-sub{font-size:13px;color:var(--muted);text-align:center;line-height:1.5;margin-bottom:16px}
+.install-steps{background:var(--forest-lite);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:13px;line-height:1.8;color:var(--forest)}
+.install-btns{display:flex;gap:8px}
+.install-btn-primary{flex:1;height:48px;border-radius:12px;background:var(--forest);color:#fff;border:none;font-size:15px;font-weight:700;cursor:pointer}
+.install-btn-later{width:90px;height:48px;border-radius:12px;background:var(--bg);color:var(--muted);border:1.5px solid var(--border);font-size:14px;font-weight:600;cursor:pointer}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.shon-open-btn{width:100%;height:44px;border-radius:12px;border:1.5px dashed var(--forest3);background:var(--forest-lite);color:var(--forest);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.shon-open-btn:active{background:var(--forest);color:#fff}
+.shon-hdr{background:var(--forest);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.shon-list{padding:0 14px;display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.shon-list-item{background:var(--card);border-radius:12px;border:1.5px solid var(--border);display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;transition:.1s;position:relative;user-select:none;-webkit-user-select:none}
+.shon-list-item:active{transform:scale(.98)}
+.shon-list-item.selected{border-color:var(--forest);background:var(--forest-lite)}
+.shon-list-item.side-b{border-left:4px solid var(--forest)}
+.shon-list-item.side-z{border-left:4px solid var(--bark)}
+.shon-item-km{font-size:20px;font-weight:900;color:var(--forest);min-width:46px}
+.shon-item-side{font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;flex-shrink:0}
+.shon-item-side.b{background:var(--forest);color:#fff}
+.shon-item-side.z{background:var(--bark);color:#fff}
+.shon-item-info{flex:1}
+.shon-item-total{font-size:13px;font-weight:700;color:var(--text)}
+.shon-item-pct{font-size:11px;color:var(--muted);margin-top:1px}
+.shon-item-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:.15px}
+.shon-list-item.selected .shon-item-check{border-color:var(--forest);background:var(--forest);color:#fff}
+.shon-select-bar{position:fixed;bottom:0;left:0;right:0;background:var(--forest);color:#fff;padding:10px 14px;display:none;gap:8px;z-index:300;align-items:center}
+.shon-select-bar.show{display:flex}
+.shon-select-count{flex:1;font-size:14px;font-weight:700}
+.shon-sel-btn{padding:0 14px;height:40px;border-radius:10px;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+.shon-sel-btn.danger{background:#dc2626;border-color:#dc2626}
+.shon-sel-btn:active{opacity:.8}
+.shon-drum-wrap{margin:8px 14px 0;height:240px;position:relative;background:#fff;border-radius:14px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.07);display:flex;flex-direction:column}
+.shon-drum-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 14px 4px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth}
+.shon-drum-scroll::-webkit-scrollbar{width:3px}
+.shon-drum-scroll::-webkit-scrollbar-thumb{background:var(--forest3);border-radius:3px}
+.shon-drum-center{padding:0 14px 10px;flex-shrink:0}
+.sd-item{width:100%;border-radius:10px;display:flex;align-items:center;gap:8px;padding:8px 12px;font-weight:700;cursor:pointer;position:relative;flex-shrink:0;transition:transform .1s}
+.sd-item:active{transform:scale(.97)}
+.sd-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0}
+.sd-lbl{font-size:13px;flex:1}
+.sd-undo{margin-left:auto;font-size:16px;opacity:.5;padding:2px 6px}
+.sd-center-box{width:100%;border-radius:12px;border:2.5px dashed var(--forest3);background:var(--forest-lite);display:flex;align-items:center;gap:10px;padding:10px 14px}
+.sd-center-num{width:44px;height:44px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;flex-shrink:0}
+.sd-center-lbl{font-size:13px;font-weight:700;color:var(--forest2)}
+.shon-type-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 14px 0}
+.shon-type-btn{height:52px;border-radius:12px;border:none;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;transition:.1s;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.shon-type-btn:active{transform:scale(.94);opacity:.85}
+.shon-stats{display:flex;margin:6px 14px 0;border-radius:12px;border:1.5px solid var(--border);overflow:hidden;background:#fff}
+.shon-stat{flex:1;padding:7px 4px;text-align:center;border-right:1px solid var(--border)}
+.shon-stat:last-child{border-right:none}
+.shon-stat-num{font-size:15px;font-weight:900;line-height:1}
+.shon-stat-lbl{font-size:9px;font-weight:600;color:var(--muted);margin-top:2px}
+.shon-pk-nav{display:flex;align-items:center;gap:8px;margin:6px 14px 0;background:var(--forest-lite);border-radius:12px;border:1px solid #c8e6d4;padding:7px 10px}
+.shon-pk-nav-btn{width:42px;height:42px;border-radius:10px;border:1.5px solid var(--forest3);background:#fff;color:var(--forest);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.1s}
+.shon-pk-nav-btn:active{background:var(--forest);color:#fff}
+.shon-pk-nav-btn:disabled{opacity:.25;pointer-events:none}
+.shon-pk-nav-center{flex:1;text-align:center}
+.shon-pk-nav-num{font-size:18px;font-weight:900;color:var(--forest)}
+.shon-pk-nav-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.shon-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.shon-tbl th{background:var(--forest);color:#fff;padding:5px 6px;text-align:center;font-weight:700;white-space:nowrap}
+.shon-tbl td{padding:5px 6px;text-align:center;border-bottom:1px solid var(--border);font-weight:600}
+.shon-tbl tr:last-child td{background:var(--forest-lite);font-weight:800;border-top:2px solid var(--forest3)}
+.shon-tbl .col-bad{color:#dc2626}
+.shon-tbl .col-good{color:#16a34a}
+</style>
+</head>
+<body>
+<div class="hdr"><div class="hdr-row"><span class="hdr-icon">🌿</span><div><div class="hdr-title">Торон Хашааны Эрсдэл</div><div class="hdr-sub">ПЧ-3 · Малын хориг хашааны үнэлгээ</div></div></div></div>
+<div class="toast" id="toast"></div>
+
+<div class="advance-overlay" id="advOverlay">
+  <div class="adv-box">
+    <div class="adv-check">✅</div>
+    <div class="adv-title" id="advTitle">Бүртгэгдлээ!</div>
+    <div class="adv-sub" id="advSub">Дараагийн КМ руу шилжиж байна...</div>
+    <div class="adv-next" id="advNext"></div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen active" id="homeScreen">
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Нийт бүртгэл</div></div>
+    <div class="stat-card"><div class="stat-num" id="statKm">0</div><div class="stat-label">КМ тоо</div></div>
+  </div>
+  <div class="risk-bar"><div class="risk-bar-inner">
+    <div class="risk-bar-title">Эрсдлийн хуваарилалт</div>
+    <div class="risk-chips">
+      <div class="risk-chip" style="background:#dcfce7;color:#16a34a">Маш бага<br><span id="rc1">0</span></div>
+      <div class="risk-chip" style="background:#ecfccb;color:#65a30d">Бага<br><span id="rc2">0</span></div>
+      <div class="risk-chip" style="background:#fef3c7;color:#d97706">Дунд<br><span id="rc3">0</span></div>
+      <div class="risk-chip" style="background:#ffedd5;color:#ea580c">Их<br><span id="rc4">0</span></div>
+      <div class="risk-chip" style="background:#fee2e2;color:#dc2626">Маш их<br><span id="rc5">0</span></div>
+    </div>
+  </div></div>
+
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
+    <span>🔩 Шон тоолох судалгаа</span>
+    <span id="shonSummaryPill" style="font-size:11px;color:var(--forest2);font-weight:700"></span>
+  </div>
+  <div style="padding:0 14px">
+    <button class="shon-open-btn" onclick="openShon()">+ Шон судалгаа нэмэх / үргэлжлүүлэх</button>
+  </div>
+  <div class="shon-list" id="shonHomeList"></div>
+  <div class="shon-select-bar" id="shonSelectBar">
+    <span class="shon-select-count" id="shonSelCount">0 сонгогдлоо</span>
+    <button class="shon-sel-btn" onclick="shonSelectAll()">Бүгд</button>
+    <button class="shon-sel-btn" onclick="shonDownloadSelected()">📥 Татах</button>
+    <button class="shon-sel-btn danger" onclick="shonDeleteSelected()">🗑 Устгах</button>
+    <button class="shon-sel-btn" onclick="shonCancelSelect()">✕</button>
+  </div>
+
+  <div class="section-title">Хийх КМ жагсаалт</div>
+  <div class="session-card">
+    <div class="session-hdr">
+      <span class="session-hdr-title">📋 КМ нэмэх</span>
+      <button onclick="clearSession()" style="background:none;border:none;font-size:11px;color:var(--muted);cursor:pointer">Цэвэрлэх</button>
+    </div>
+    <div class="session-add">
+      <input class="sess-inp" id="sessFrom" type="number" placeholder="681" min="1" max="9999">
+      <span class="sess-sep">—</span>
+      <input class="sess-inp" id="sessTo" type="number" placeholder="701" min="1" max="9999">
+      <div class="sess-side-grp">
+        <button class="sess-side ab" id="ssBtnB" onclick="setSessSide('Б')">Б</button>
+        <button class="sess-side" id="ssBtnZ" onclick="setSessSide('З')">З</button>
+        <button class="sess-side" id="ssBtnH" onclick="setSessSide('БЗ')">БЗ</button>
+      </div>
+      <button class="sess-add-btn" onclick="addToSession()">+ Нэмэх</button>
+    </div>
+    <div class="session-list" id="sessionList"></div>
+    <div class="sess-start-wrap">
+      <button class="sess-start-btn" id="sessStartBtn" onclick="startSession()" disabled>▶ Эхлэх</button>
+    </div>
+  </div>
+
+  <div class="section-title">Бүртгэлийн жагсаалт</div>
+  <div class="record-list" id="recordList">
+    <div class="empty"><div class="empty-icon">🏗️</div><div class="empty-text">Бүртгэл байхгүй байна</div><div class="empty-sub">+ товч дарж шинэ бүртгэл нэмнэ үү</div></div>
+  </div>
+</div>
+
+<!-- ENTRY -->
+<div class="screen" id="entryScreen">
+  <div class="score-hdr">
+    <div><div class="score-hdr-label">Нийт оноо</div>
+      <div><span class="score-hdr-num" id="liveScore">0.0</span><span class="score-hdr-max"> /50</span></div></div>
+    <div style="text-align:right">
+      <div id="liveBadge" class="risk-pill" style="background:#dcfce7;color:#16a34a">Маш бага</div>
+      <div id="sessProgPill" style="margin-top:4px"></div>
+    </div>
+  </div>
+  <div class="km-bar">
+    <button class="km-nav-btn" id="kmPrev" onclick="kmGo(-1)">‹</button>
+    <div class="km-center">
+      <input class="km-input" id="kmInput" type="number" placeholder="КМ" min="0" max="9999" oninput="onKmInput()">
+      <div class="side-toggle">
+        <button class="side-btn ab" id="btnB" onclick="setSide('Баруун')">Баруун</button>
+        <button class="side-btn" id="btnZ" onclick="setSide('Зүүн')">Зүүн</button>
+      </div>
+    </div>
+    <button class="km-nav-btn" id="kmNext" onclick="kmGo(1)">›</button>
+  </div>
+  <div class="pk-strip" id="pkStrip"></div>
+  <div class="pk-big-label">
+    <div class="pk-big-num" id="pkBigNum">1</div>
+    <div><div style="font-size:13px;font-weight:700;color:var(--forest)">-р пикет</div>
+      <div class="pk-big-sub" id="pkBigSub">Шалгуур 1/10</div></div>
+    <div class="pk-big-prog" id="pkBigProg"></div>
+  </div>
+  <div class="crit-outer" id="critOuter">
+    <div class="crit-track" id="critTrack"></div>
+  </div>
+  <div class="crit-nav">
+    <button class="crit-nav-btn" id="critPrev" onclick="critGo(-1)">‹</button>
+    <div class="crit-dots" id="critDots"></div>
+    <button class="crit-nav-btn" id="critNext" onclick="critGo(1)">›</button>
+  </div>
+  <div id="shonAutoFillBar" style="margin:6px 14px 0;display:none">
+    <button onclick="shonAutoFill()" style="width:100%;height:40px;border-radius:10px;background:var(--forest-lite);border:1.5px solid var(--forest3);color:var(--forest);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+      🔩 Шонгийн судалгаанаас шалгуур 2, 3 автоматаар бөглөх
+    </button>
+  </div>
+  <div class="save-bar">
+    <button class="btn-cancel" onclick="cancelEntry()">Буцах</button>
+    <button class="btn-save" onclick="saveEntry()">💾 Хадгалах</button>
+  </div>
+</div>
+
+<!-- SHON -->
+<div class="screen" id="shonScreen">
+  <div class="shon-hdr">
+    <div>
+      <div class="score-hdr-label">КМ нийт шон</div>
+      <div><span class="score-hdr-num" id="shonTotalNum">0</span><span class="score-hdr-max"> ш</span></div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-size:10px;opacity:.7">КМ дараалал</div>
+      <div style="font-size:16px;font-weight:800" id="shonKmProgress">—</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:11px;opacity:.7">Тэнцэхгүй %</div>
+      <div style="font-size:20px;font-weight:800" id="shonPctNum">0%</div>
+    </div>
+  </div>
+  <div class="km-bar">
+    <button class="km-nav-btn" id="shonKmPrev" onclick="shonKmGo(-1)">‹</button>
+    <div class="km-center">
+      <input class="km-input" id="shonKmInput" type="number" placeholder="КМ" min="0" max="9999" oninput="shonKmChange()">
+      <div class="side-toggle">
+        <button class="side-btn ab" id="shonBtnB" onclick="shonSetSide('Баруун')">Баруун</button>
+        <button class="side-btn" id="shonBtnZ" onclick="shonSetSide('Зүүн')">Зүүн</button>
+      </div>
+    </div>
+    <button class="km-nav-btn" id="shonKmNext" onclick="shonKmGo(1)">›</button>
+  </div>
+  <div class="pk-strip" id="shonPkStrip"></div>
+  <div class="pk-big-label">
+    <div class="pk-big-num" id="shonPkNum">1</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:var(--forest)">-р пикет</div>
+      <div class="pk-big-sub" id="shonPkSub">0 шон бүртгэсэн</div>
+    </div>
+    <div class="pk-big-prog" id="shonPkProg"></div>
+  </div>
+  <div class="shon-drum-wrap" id="shonDrumWrap">
+    <div class="shon-drum-scroll" id="shonDrumScroll"></div>
+    <div class="shon-drum-center" id="shonDrumCenter"></div>
+  </div>
+  <div class="shon-type-btns">
+    <button class="shon-type-btn" style="background:#dc2626" onclick="shonRegister('tentsehgui')">🔴 Тэнцэхгүй</button>
+    <button class="shon-type-btn" style="background:#65a30d" onclick="shonRegister('huuchin')">🟡 Хуучин</button>
+    <button class="shon-type-btn" style="background:#d97706" onclick="shonRegister('modon')">🟠 Модон</button>
+    <button class="shon-type-btn" style="background:#16a34a" onclick="shonRegister('shine')">🟢 Шинэ</button>
+  </div>
+  <div class="shon-stats">
+    <div class="shon-stat"><div class="shon-stat-num" style="color:#16a34a" id="ss_shine">0</div><div class="shon-stat-lbl">Шинэ</div></div>
+    <div class="shon-stat"><div class="shon-stat-num" style="color:#65a30d" id="ss_huuchin">0</div><div class="shon-stat-lbl">Хуучин</div></div>
+    <div class="shon-stat"><div class="shon-stat-num" style="color:#d97706" id="ss_modon">0</div><div class="shon-stat-lbl">Модон</div></div>
+    <div class="shon-stat"><div class="shon-stat-num" style="color:#dc2626" id="ss_tentsehgui">0</div><div class="shon-stat-lbl">Тэнцэхгүй</div></div>
+    <div class="shon-stat"><div class="shon-stat-num" style="color:var(--forest)" id="ss_total">0</div><div class="shon-stat-lbl">Нийт</div></div>
+  </div>
+  <div class="shon-pk-nav" id="shonPkNav">
+    <button class="shon-pk-nav-btn" id="shonPkPrev" onclick="shonPkDir(-1)">‹</button>
+    <div class="shon-pk-nav-center">
+      <div class="shon-pk-nav-num" id="shonPkNavNum">1-р пикет</div>
+      <div class="shon-pk-nav-sub" id="shonPkNavSub">0/10 пк дууссан</div>
+    </div>
+    <button class="shon-pk-nav-btn" id="shonPkNext" onclick="shonPkDir(1)">›</button>
+  </div>
+  <div style="margin:6px 14px 0;background:#fff;border-radius:12px;border:1.5px solid var(--border);overflow:hidden">
+    <div style="padding:7px 14px 5px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)">КМ-ийн нэгтгэл</div>
+    <div id="shonSummaryTable" style="overflow-x:auto"></div>
+  </div>
+  <div class="save-bar">
+    <button class="btn-cancel" onclick="closeShon()">Буцах</button>
+    <button class="btn-save" style="background:var(--bark);font-size:12px" onclick="exportShonAsRisk()">📥 Шалгуур 2,3</button>
+    <button class="btn-save" onclick="saveShon()">💾 Хадгалах</button>
+  </div>
+</div>
+
+<!-- PWA Install Prompt -->
+<div class="install-overlay" id="installOverlay">
+  <div class="install-box">
+    <div class="install-icon">🌿</div>
+    <div class="install-title">Торон Хашааны Эрсдэл</div>
+    <div class="install-sub">Утасны дэлгэц дээр суулгаснаар<br>интернэтгүй ч ашиглах боломжтой</div>
+    <div class="install-steps" id="installSteps"></div>
+    <div class="install-btns">
+      <button class="install-btn-primary" id="installBtn" onclick="doInstall()">📲 Суулгах</button>
+      <button class="install-btn-later" onclick="dismissInstall()">Дараа</button>
+    </div>
+  </div>
+</div>
+
+<button class="fab" id="fabBtn" onclick="newEntry()">+</button>
+<button class="export-btn" id="exportBtn" onclick="exportExcel()">📥 Excel</button>
+
+<script>
+// ═══════════════════════════════════════════
+// CRITERIA
+// ═══════════════════════════════════════════
+const CRITERIA = [
+  {short:'Засварын байдал',name:'Торон хашаанд их засвар хийсэн болон урсгалаар их засварын хэмжээнд зассан эсэх',
+   options:[{s:1,l:'0-5 жил'},{s:3,l:'6-10 жил'},{s:5,l:'11-с дээш жил'}]},
+  {short:'Шонгийн тоо',name:'1 км дэх торон хашааны шонгийн тоо',
+   options:[{s:1,l:'285-аас дээш'},{s:2,l:'284-255'},{s:3,l:'254-225'},{s:4,l:'224-195'},{s:5,l:'194-аас бага'}]},
+  {short:'Тэнцэхгүй шонгийн %',name:'1 км дэх тэнцэхгүй шонгийн эзлэх хувь',
+   options:[{s:1,l:'0-6%'},{s:2,l:'7-12%'},{s:3,l:'13-18%'},{s:4,l:'19-24%'},{s:5,l:'25%-иас их'}]},
+  {short:'Торон утасны байдал',name:'Торон утасны эгнээний тоо болон тор татсан байдал',
+   options:[{s:1,l:'5 эгнээ шинэ, унжаагүй'},{s:2,l:'5 эгнээ хольж татсан, унжаагүй'},{s:3,l:'5 эгнээ суларч унжсан'},{s:4,l:'4 эгнээ шинэ, унжаагүй'},{s:5,l:'4 эгнээ хуучин, суларч унжсан'}]},
+  {short:'Босоо нүдэлгээ',name:'Босоо нүдэлгээ хийгдсэн байдал',
+   options:[{s:1,l:'≤25см'},{s:2,l:'26-35см'},{s:3,l:'36-45см'},{s:4,l:'46-55см'},{s:5,l:'56см-ээс их'}]},
+  {short:'Ташуу нүдэлгээ',name:'Ташуу нүдэлгээ хийгдсэн байдал',
+   options:[{s:1,l:'Сеткэн тортой'},{s:2,l:'Нүдэлгээ сулраагүй'},{s:3,l:'Тасарч суларсан/шатсан'},{s:4,l:'Нүдэлгээ суларсан/муудсан'},{s:5,l:'Сеткэн торгүй, нүдэлгээгүй'}]},
+  {short:'Доод утасны өндөр',name:'Торны хамгийн доод утасны газрын гадаргаас татсан байдал',
+   options:[{s:1,l:'0-10см'},{s:2,l:'11-15см'},{s:3,l:'16-20см'},{s:4,l:'21-25см'},{s:5,l:'26см-ээс их'}]},
+  {short:'Хашааны өндөр',name:'Торон хашааны өндөр',
+   options:[{s:1,l:'121см-с дээш'},{s:2,l:'116-120см'},{s:3,l:'111-115см'},{s:4,l:'106-110см'},{s:5,l:'105см-ээс бага'}]},
+  {short:'Цасанд дарагдах',name:'Торон хашаа цас, элс, шороонд дарагддаг байдал',
+   options:[{s:1,l:'≤20см'},{s:2,l:'21-30см'},{s:3,l:'31-40см'},{s:4,l:'41-50см'},{s:5,l:'51см-ээс их'}]},
+  {short:'Малын нягтрал',name:'Малын нягтрал (толгой/км)',single:true,
+   options:[{s:1,l:'50 хүртэл'},{s:2,l:'51-200'},{s:3,l:'201-500'},{s:4,l:'501-1000'},{s:5,l:'1000-аас их'}]},
+];
+const SC=['#94a3b8','#16a34a','#65a30d','#d97706','#ea580c','#dc2626'];
+const RISK_FILLS=['DCFCE7','ECFCCB','FEF3C7','FFEDD5','FEE2E2'];
+const RISK_FONTS=['16a34a','65a30d','d97706','ea580c','dc2626'];
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let records=[], sessionPlan=[], sessionIdx=-1;
+let currentEntry=null, editingId=null;
+let currentCritIdx=0, currentPkIdx=0;
+let sessSideMode='Б';
+
+function loadAll(){
+  try{ records=JSON.parse(localStorage.getItem('th_r')||'[]'); }catch(e){ records=[]; }
+  try{ sessionPlan=JSON.parse(localStorage.getItem('th_sess')||'[]'); }catch(e){ sessionPlan=[]; }
+}
+function saveAll(){ localStorage.setItem('th_r',JSON.stringify(records)); localStorage.setItem('th_sess',JSON.stringify(sessionPlan)); }
+
+function calcCritOnoо(entry,ci){
+  const c=CRITERIA[ci];
+  if(c.single) return entry.vals[ci][0]||0;
+  return (entry.vals[ci]||[]).reduce((a,b)=>a+(b||0),0)/10;
+}
+function calcTotal(entry){ return CRITERIA.reduce((s,_,i)=>s+calcCritOnoо(entry,i),0); }
+function getRisk(t){
+  if(t<17) return{l:1,label:'Маш бага эрсдэлтэй',short:'Маш бага',bg:'#dcfce7',fg:'#16a34a'};
+  if(t<24) return{l:2,label:'Бага эрсдэлтэй',short:'Бага',bg:'#ecfccb',fg:'#65a30d'};
+  if(t<31) return{l:3,label:'Дунд эрсдэлтэй',short:'Дунд',bg:'#fef3c7',fg:'#d97706'};
+  if(t<38) return{l:4,label:'Их эрсдэлтэй',short:'Их',bg:'#ffedd5',fg:'#ea580c'};
+  return{l:5,label:'Маш их эрсдэлтэй',short:'Маш их',bg:'#fee2e2',fg:'#dc2626'};
+}
+
+// ═══════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════
+function renderHome(){
+  loadAll();
+  document.getElementById('statTotal').textContent=records.length;
+  document.getElementById('statKm').textContent=new Set(records.map(r=>r.km)).size;
+  const cnts=[0,0,0,0,0];
+  records.forEach(r=>{ cnts[getRisk(calcTotal(r)).l-1]++; });
+  for(let i=1;i<=5;i++) document.getElementById('rc'+i).textContent=cnts[i-1];
+  renderSessionList();
+  const list=document.getElementById('recordList');
+  if(!records.length){
+    list.innerHTML='<div class="empty"><div class="empty-icon">🏗️</div><div class="empty-text">Бүртгэл байхгүй байна</div><div class="empty-sub">+ товч дарж шинэ бүртгэл нэмнэ үү</div></div>';
+    return;
+  }
+  const sorted=[...records].sort((a,b)=>a.km-b.km||(a.side==='Баруун'?-1:1));
+  list.innerHTML=sorted.map(r=>{
+    const t=calcTotal(r),risk=getRisk(t);
+    return `<div class="record-card" onclick="editRecord('${r.id}')">
+      <div><div class="record-km">${r.km}</div><div class="record-side">${r.side}</div></div>
+      <div class="record-mid"><div class="record-date">${r.date||''}</div></div>
+      <div style="text-align:right">
+        <div class="record-badge" style="background:${risk.bg};color:${risk.fg}">${risk.short}</div>
+        <div class="record-score">${t.toFixed(1)}/50</div>
+      </div>
+      <button class="record-del" onclick="event.stopPropagation();deleteRecord('${r.id}')">🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+function deleteRecord(id){
+  if(!confirm('Устгах уу?')) return;
+  records=records.filter(r=>r.id!==id);
+  saveAll(); renderHome(); showToast('Устгагдлаа');
+}
+
+// ═══════════════════════════════════════════
+// SESSION
+// ═══════════════════════════════════════════
+function setSessSide(s){
+  sessSideMode=s;
+  document.getElementById('ssBtnB').className='sess-side'+(s==='Б'?' ab':'');
+  document.getElementById('ssBtnZ').className='sess-side'+(s==='З'?' az':'');
+  document.getElementById('ssBtnH').className='sess-side'+(s==='БЗ'?' ah':'');
+}
+function addToSession(){
+  const from=parseInt(document.getElementById('sessFrom').value)||0;
+  const to=parseInt(document.getElementById('sessTo').value)||from;
+  if(!from){ showToast('КМ дугаар оруулна уу'); return; }
+  const added=[];
+  for(let km=Math.min(from,to);km<=Math.max(from,to);km++){
+    const sides=sessSideMode==='БЗ'?['Баруун','Зүүн']:sessSideMode==='Б'?['Баруун']:['Зүүн'];
+    sides.forEach(side=>{
+      if(!sessionPlan.find(s=>s.km===km&&s.side===side)){
+        sessionPlan.push({km,side}); added.push(km);
+      }
+    });
+  }
+  sessionPlan.sort((a,b)=>a.km-b.km||(a.side==='Баруун'?-1:1));
+  saveAll(); renderSessionList();
+  showToast(`${added.length>0?[...new Set(added)].length+' КМ':'Аль хэдийн нэмсэн'} нэмэгдлээ`);
+}
+function removeFromSession(km,side){
+  sessionPlan=sessionPlan.filter(s=>!(s.km===km&&s.side===side));
+  saveAll(); renderSessionList();
+}
+function clearSession(){
+  if(sessionPlan.length&&!confirm('Жагсаалтыг цэвэрлэх үү?')) return;
+  sessionPlan=[]; saveAll(); renderSessionList();
+}
+function renderSessionList(){
+  const el=document.getElementById('sessionList');
+  if(!sessionPlan.length){
+    el.innerHTML='<div class="sess-empty">КМ нэмэгдээгүй байна</div>';
+    document.getElementById('sessStartBtn').disabled=true; return;
+  }
+  el.innerHTML=sessionPlan.map(s=>{
+    const done=!!records.find(r=>r.km===s.km&&r.side===s.side);
+    return `<div class="sess-item" onclick="editKm(${s.km},'${s.side}')">
+      <div class="sess-item-km">${s.km}</div>
+      <div class="sess-item-side ${s.side==='Баруун'?'ss-b':'ss-z'}">${s.side}</div>
+      <div class="sess-item-status">${done?'✅':'⬜'}</div>
+      <button class="sess-item-del" onclick="event.stopPropagation();removeFromSession(${s.km},'${s.side}')">✕</button>
+    </div>`;
+  }).join('');
+  const allDone=sessionPlan.every(s=>records.find(r=>r.km===s.km&&r.side===s.side));
+  const btn=document.getElementById('sessStartBtn');
+  btn.disabled=false;
+  btn.textContent=allDone?'🔄 Дахин эхлэх':sessionPlan.some(s=>records.find(r=>r.km===s.km&&r.side===s.side))?'▶ Үргэлжлүүлэх':'▶ Эхлэх';
+}
+function startSession(){
+  if(!sessionPlan.length) return;
+  const first=sessionPlan.find(s=>!records.find(r=>r.km===s.km&&r.side===s.side))||sessionPlan[0];
+  sessionIdx=sessionPlan.indexOf(first);
+  loadOrCreate(first.km,first.side,true);
+}
+function editKm(km,side){
+  sessionIdx=sessionPlan.findIndex(s=>s.km===km&&s.side===side);
+  loadOrCreate(km,side,true);
+}
+function getNextSession(){
+  if(sessionIdx<0) return null;
+  for(let i=sessionIdx+1;i<sessionPlan.length;i++){
+    if(!records.find(r=>r.km===sessionPlan[i].km&&r.side===sessionPlan[i].side)) return {item:sessionPlan[i],idx:i};
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════════
+// ENTRY
+// ═══════════════════════════════════════════
+function newEntry(){
+  sessionIdx=-1; editingId=null;
+  currentEntry={id:Date.now().toString(),km:'',side:'Баруун',date:new Date().toLocaleDateString('mn-MN'),
+    vals:CRITERIA.map(c=>c.single?[0]:new Array(10).fill(c.options[0].s))};
+  currentCritIdx=0; currentPkIdx=0; openEntry();
+}
+function editRecord(id){
+  const rec=records.find(r=>r.id===id);
+  if(!rec) return;
+  sessionIdx=sessionPlan.findIndex(s=>s.km===rec.km&&s.side===rec.side);
+  editingId=id; currentEntry=JSON.parse(JSON.stringify(rec));
+  currentCritIdx=0; currentPkIdx=0; openEntry();
+}
+function loadOrCreate(km,side,fromSession){
+  const existing=records.find(r=>r.km===km&&r.side===side);
+  if(existing){ editingId=existing.id; currentEntry=JSON.parse(JSON.stringify(existing)); }
+  else{ editingId=null; currentEntry={id:Date.now().toString(),km,side,date:new Date().toLocaleDateString('mn-MN'),vals:CRITERIA.map(c=>c.single?[0]:new Array(10).fill(c.options[0].s))}; }
+  currentCritIdx=0; currentPkIdx=0; openEntry();
+}
+function openEntry(){
+  document.getElementById('homeScreen').classList.remove('active');
+  document.getElementById('entryScreen').classList.add('active');
+  document.getElementById('fabBtn').style.display='none';
+  document.getElementById('exportBtn').style.display='none';
+  renderEntry();
+}
+function cancelEntry(){
+  document.getElementById('entryScreen').classList.remove('active');
+  document.getElementById('homeScreen').classList.add('active');
+  document.getElementById('fabBtn').style.display='flex';
+  document.getElementById('exportBtn').style.display='flex';
+  renderHome();
+}
+function saveEntry(){
+  const km=parseInt(document.getElementById('kmInput').value);
+  if(!km){ showToast('КМ дугаар оруулна уу!'); return; }
+  doSave(km,currentEntry.side);
+  cancelEntry(); showToast('Хадгалагдлаа ✓');
+}
+function doSave(km,side){
+  if(!km) return;
+  currentEntry.km=km; currentEntry.side=side;
+  currentEntry.date=new Date().toLocaleDateString('mn-MN');
+  if(editingId){
+    const i=records.findIndex(r=>r.id===editingId);
+    if(i>=0) records[i]=currentEntry; else records.push(currentEntry);
+  } else {
+    const i=records.findIndex(r=>r.km===km&&r.side===side);
+    if(i>=0) records[i]={...currentEntry,id:records[i].id}; else records.push(currentEntry);
+  }
+  saveAll();
+}
+
+// ═══════════════════════════════════════════
+// KM NAV
+// ═══════════════════════════════════════════
+function setSide(s){
+  currentEntry.side=s;
+  document.getElementById('btnB').className='side-btn'+(s==='Баруун'?' ab':'');
+  document.getElementById('btnZ').className='side-btn'+(s==='Зүүн'?' az':'');
+  updateKmBtns(); updateShonAutoFillBtn();
+}
+function onKmInput(){ currentEntry.km=parseInt(document.getElementById('kmInput').value)||''; updateKmBtns(); updateShonAutoFillBtn(); }
+function updateKmBtns(){
+  const km=parseInt(document.getElementById('kmInput').value)||0;
+  document.getElementById('kmPrev').disabled=km<=1;
+  document.getElementById('kmNext').disabled=km<=0||km>=9999;
+}
+function kmGo(dir){
+  const km=parseInt(document.getElementById('kmInput').value);
+  if(!km){ showToast('КМ дугаар оруулна уу!'); return; }
+  doSave(km,currentEntry.side);
+  loadOrCreate(km+dir,currentEntry.side,false);
+}
+
+// ═══════════════════════════════════════════
+// RENDER ENTRY
+// ═══════════════════════════════════════════
+function renderEntry(){
+  const km=currentEntry.km||''; const side=currentEntry.side||'Баруун';
+  document.getElementById('kmInput').value=km;
+  document.getElementById('btnB').className='side-btn'+(side==='Баруун'?' ab':'');
+  document.getElementById('btnZ').className='side-btn'+(side==='Зүүн'?' az':'');
+  updateKmBtns();
+  const spill=document.getElementById('sessProgPill');
+  if(sessionIdx>=0){
+    const done=sessionPlan.filter(s=>records.find(r=>r.km===s.km&&r.side===s.side)).length;
+    spill.innerHTML=`<span class="sess-prog">${sessionIdx+1}/${sessionPlan.length} · ${done} дууссан</span>`;
+  } else spill.innerHTML='';
+  renderPkStrip(); buildSlides(); updateScore(); updateShonAutoFillBtn();
+}
+
+// ═══════════════════════════════════════════
+// PK STRIP
+// ═══════════════════════════════════════════
+function renderPkStrip(){
+  const strip=document.getElementById('pkStrip');
+  strip.innerHTML=Array.from({length:10},(_,i)=>{
+    let cls='pk-tab';
+    if(i===currentPkIdx) cls+=' active';
+    else if(isPkDone(i)) cls+=' done';
+    else if(isPkTouched(i)) cls+=' filled';
+    return `<button class="${cls}" onclick="goPk(${i})">${i+1}<div class="pk-dot"></div></button>`;
+  }).join('');
+  strip.querySelector('.pk-tab.active')?.scrollIntoView({inline:'center',behavior:'smooth'});
+  document.getElementById('pkBigNum').textContent=currentPkIdx+1;
+  document.getElementById('pkBigSub').textContent=`Шалгуур ${currentCritIdx+1}/10`;
+  const donePks=Array.from({length:10},(_,i)=>isPkDone(i)).filter(Boolean).length;
+  document.getElementById('pkBigProg').textContent=`${donePks}/10 пк дууссан`;
+}
+function isPkTouched(pi){ return CRITERIA.some((c,ci)=>!c.single&&(currentEntry.vals[ci][pi]||0)>c.options[0].s); }
+function isPkDone(pi){ return CRITERIA.every((c,ci)=>c.single||typeof currentEntry.vals[ci][pi]==='number'); }
+function goPk(pi){ currentPkIdx=pi; currentCritIdx=0; renderPkStrip(); buildSlides(); }
+
+// ═══════════════════════════════════════════
+// CAROUSEL
+// ═══════════════════════════════════════════
+function buildSlides(){
+  const track=document.getElementById('critTrack');
+  track.innerHTML=CRITERIA.map((_,ci)=>buildSlide(ci)).join('');
+  applyPos(false); renderDots(); updateCritBtns();
+}
+function buildSlide(ci){
+  const c=CRITERIA[ci];
+  const curVal=c.single?currentEntry.vals[ci][0]:currentEntry.vals[ci][currentPkIdx];
+  const pkTag=c.single?'':'· '+(currentPkIdx+1)+'пк';
+  const opts=c.options.map(o=>{
+    const col=SC[o.s]||'#94a3b8';
+    const sel=curVal===o.s?` sel${o.s}`:'';
+    return `<button class="score-opt${sel}" onclick="selectScore(${ci},${o.s})">
+      <div class="score-opt-num" style="background:${col}">${o.s}</div>
+      <div class="score-opt-lbl">${o.l}</div></button>`;
+  }).join('');
+  return `<div class="crit-slide" id="cs_${ci}">
+    <div class="slide-hdr">
+      <div class="slide-badge">${ci+1}/10 ${pkTag}</div>
+      <div class="slide-name">${c.name}</div>
+    </div>
+    <div class="score-opts" id="sopts_${ci}">${opts}</div>
+  </div>`;
+}
+function selectScore(ci,score){
+  const c=CRITERIA[ci];
+  if(c.single){ currentEntry.vals[ci][0]=score; }
+  else { currentEntry.vals[ci][currentPkIdx]=score; }
+  const cont=document.getElementById('sopts_'+ci);
+  cont?.querySelectorAll('.score-opt').forEach((btn,i)=>{
+    const o=c.options[i]; btn.className='score-opt'+(score===o.s?` sel${o.s}`:'');
+  });
+  updateScore(); renderPkStrip();
+  if(!c.single){
+    if(currentCritIdx<CRITERIA.length-1){ setTimeout(()=>{ critGo(1); },160); }
+    else {
+      if(currentPkIdx<9){
+        const nextPk=currentPkIdx+1;
+        setTimeout(()=>{ currentPkIdx=nextPk; currentCritIdx=0; renderPkStrip(); buildSlides(); showToast(`${nextPk+1}-р пикет →`); },200);
+      } else { setTimeout(()=>checkAndAdvanceKm(),300); }
+    }
+  } else {
+    if(currentPkIdx===9){ setTimeout(()=>checkAndAdvanceKm(),300); }
+  }
+}
+function checkAndAdvanceKm(){
+  const km=parseInt(document.getElementById('kmInput').value);
+  if(!km) return;
+  doSave(km,currentEntry.side);
+  const next=getNextSession();
+  if(next){
+    const adv=document.getElementById('advOverlay');
+    document.getElementById('advTitle').textContent=`${km}КМ ${currentEntry.side} бүртгэгдлээ!`;
+    document.getElementById('advSub').textContent='Дараагийн КМ руу шилжиж байна...';
+    document.getElementById('advNext').textContent=`→ ${next.item.km}КМ ${next.item.side}`;
+    adv.classList.add('show');
+    setTimeout(()=>{
+      adv.classList.remove('show');
+      sessionIdx=next.idx; editingId=null;
+      const existing=records.find(r=>r.km===next.item.km&&r.side===next.item.side);
+      if(existing){ editingId=existing.id; currentEntry=JSON.parse(JSON.stringify(existing)); }
+      else{ currentEntry={id:Date.now().toString(),km:next.item.km,side:next.item.side,date:new Date().toLocaleDateString('mn-MN'),vals:CRITERIA.map(c=>c.single?[0]:new Array(10).fill(c.options[0].s))}; }
+      currentCritIdx=0; currentPkIdx=0; renderEntry();
+    },1800);
+  } else if(sessionIdx>=0){
+    const adv=document.getElementById('advOverlay');
+    document.getElementById('advTitle').textContent='🎉 Бүх КМ дууслаа!';
+    document.getElementById('advSub').textContent='Жагсаалтын бүх КМ бүртгэгдлээ';
+    document.getElementById('advNext').textContent='';
+    adv.classList.add('show');
+    setTimeout(()=>{ adv.classList.remove('show'); cancelEntry(); },2200);
+  }
+}
+function applyPos(anim){
+  const t=document.getElementById('critTrack');
+  if(!t) return;
+  t.style.transition=anim?'transform .25s cubic-bezier(.25,.46,.45,.94)':'none';
+  t.style.transform=`translateX(-${currentCritIdx*10}%)`;
+  if(!anim) requestAnimationFrame(()=>t.style.transition='');
+}
+function critGo(dir){
+  const n=currentCritIdx+dir;
+  if(n<0){
+    if(currentPkIdx>0){ currentPkIdx--; currentCritIdx=CRITERIA.length-1; renderPkStrip(); buildSlides(); showToast(`← ${currentPkIdx+1}-р пикет`); }
+    return;
+  }
+  if(n>=CRITERIA.length){
+    if(currentPkIdx<9){ currentPkIdx++; currentCritIdx=0; renderPkStrip(); buildSlides(); showToast(`${currentPkIdx+1}-р пикет →`); }
+    else { checkAndAdvanceKm(); }
+    return;
+  }
+  currentCritIdx=n; applyPos(true); renderDots(); updateCritBtns();
+  document.getElementById('pkBigSub').textContent=`Шалгуур ${n+1}/10`;
+}
+function renderDots(){
+  document.getElementById('critDots').innerHTML=CRITERIA.map((_,i)=>{
+    const act=i===currentCritIdx?'active':'';
+    const fil=isCritFilled(i)?'filled':'';
+    return `<div class="c-dot ${act} ${fil}" onclick="jumpCrit(${i})"></div>`;
+  }).join('');
+}
+function isCritFilled(ci){
+  const c=CRITERIA[ci];
+  if(c.single) return currentEntry.vals[ci][0]>0;
+  return (currentEntry.vals[ci][currentPkIdx]||0)>c.options[0].s;
+}
+function jumpCrit(ci){ currentCritIdx=ci; applyPos(true); renderDots(); updateCritBtns(); document.getElementById('pkBigSub').textContent=`Шалгуур ${ci+1}/10`; }
+function updateCritBtns(){
+  document.getElementById('critPrev').disabled = currentCritIdx===0 && currentPkIdx===0;
+  document.getElementById('critNext').disabled = currentCritIdx===CRITERIA.length-1 && currentPkIdx===9;
+}
+(function(){
+  const el=document.getElementById('critOuter');
+  let sx=0,sy=0,dr=false,dx=0;
+  el.addEventListener('touchstart',e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; dr=true; dx=0;
+    const t=document.getElementById('critTrack'); if(t) t.style.transition='none'; },{passive:true});
+  el.addEventListener('touchmove',e=>{ if(!dr) return; dx=e.touches[0].clientX-sx;
+    const dy=e.touches[0].clientY-sy;
+    if(Math.abs(dy)>Math.abs(dx)+10){ dr=false; applyPos(true); return; }
+    const t=document.getElementById('critTrack');
+    if(t) t.style.transform=`translateX(calc(-${currentCritIdx*10}% + ${dx}px))`; },{passive:true});
+  el.addEventListener('touchend',()=>{ if(!dr) return; dr=false;
+    if(dx<-40) critGo(1); else if(dx>40) critGo(-1); else applyPos(true); },{passive:true});
+})();
+
+function updateScore(){
+  const t=calcTotal(currentEntry); const risk=getRisk(t);
+  document.getElementById('liveScore').textContent=t.toFixed(1);
+  const b=document.getElementById('liveBadge');
+  b.textContent=risk.short; b.style.background=risk.bg; b.style.color=risk.fg;
+}
+
+// ═══════════════════════════════════════════
+// SHON → AUTO FILL (FIX confirmed)
+// ═══════════════════════════════════════════
+function shonCountToScore(total){
+  if(total>=285) return 1; if(total>=255) return 2; if(total>=225) return 3; if(total>=195) return 4; return 5;
+}
+function tentsehguiPctToScore(pct){
+  if(pct<=6) return 1; if(pct<=12) return 2; if(pct<=18) return 3; if(pct<=24) return 4; return 5;
+}
+function shonAutoFill(){
+  const km=parseInt(document.getElementById('kmInput').value);
+  const side=currentEntry.side;
+  if(!km){ showToast('КМ дугаар оруулна уу'); return; }
+  const sEntry=shonData[shonKey(km,side)];
+  if(!sEntry||!sEntry.pks){ showToast('Шонгийн судалгаа олдсонгүй — эхлээд шон тоолно уу'); return; }
+  const kmTotal=sEntry.pks.reduce((s,pk)=>s+(pk.poles?pk.poles.length:0),0);
+  const score2=shonCountToScore(kmTotal);
+  currentEntry.vals[1]=new Array(10).fill(score2);
+  const scores3=sEntry.pks.map(pk=>{
+    const poles=pk.poles||[];
+    const tot=poles.length;
+    if(tot===0) return CRITERIA[2].options[0].s;
+    const bad=poles.filter(t=>t==='tentsehgui').length;
+    return tentsehguiPctToScore((bad/tot)*100);
+  });
+  currentEntry.vals[2]=scores3;
+  buildSlides(); updateScore(); renderPkStrip();
+  const badTotal=sEntry.pks.reduce((s,pk)=>s+(pk.poles||[]).filter(t=>t==='tentsehgui').length,0);
+  const badPct=kmTotal>0?((badTotal/kmTotal)*100).toFixed(1):0;
+  showToast(`✓ ${kmTotal}шон, ${badPct}% тэнцэхгүй → бөглөгдлөө`);
+}
+function updateShonAutoFillBtn(){
+  const bar=document.getElementById('shonAutoFillBar');
+  if(!bar) return;
+  const km=parseInt(document.getElementById('kmInput').value);
+  const side=currentEntry?.side;
+  const hasShon=km&&side&&shonData[shonKey(km,side)]?.pks?.some(pk=>(pk.poles||[]).length>0);
+  bar.style.display=hasShon?'block':'none';
+}
+
+// ═══════════════════════════════════════════
+// EXCEL EXPORT
+// ═══════════════════════════════════════════
+function getXS(){ return window.XLSX||null; }
+
+function exportExcel(){
+  if(!records.length){ showToast('Бүртгэл байхгүй байна'); return; }
+  const XS=getXS();
+  if(!XS){ showToast('Хуудсыг дахин ачааллана уу'); return; }
+  try{ shonData=JSON.parse(localStorage.getItem('th_shon')||'{}'); }catch(e){ shonData={}; }
+  const wb=XS.utils.book_new();
+  const today=new Date();
+  const sheetName=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')} эрсдэл`;
+  const CC=[
+    {pks:2,dun:12,on:13},{pks:14,dun:24,on:25},{pks:26,ext:36,dun:37,on:38},
+    {pks:39,dun:49,on:50},{pks:51,dun:61,on:62},{pks:63,dun:73,on:74},
+    {pks:75,dun:85,on:86},{pks:87,dun:97,on:98},{pks:99,dun:109,on:110},
+    {single:114,on:115},
+  ];
+  const TOTAL_COL=116,NCOLS=126;
+  const CNAMES=['Торон хашаанд их засвар хийсэн болон урсгалаар их засварын хэмжээнд зассан эсэх','1 км дэх торон хашааны шонгийн тоо','1км дэх тэнцэхгүй шонгийн эзлэх хувь','Торон утасны эгнээний тоо болон тор татсан байдал','Босоо нүдэлгээ хийгдсэн байдал','Ташуу нүдэлгээ хийгдсэн байдал','Торны хамгийн доод утсыг газрын дээд гадаргаас татсан байдал','Торон хашааны өндөр','Торон хашаа цас элс шороонд дарагддаг байдал','Малын нягтрал'];
+  const SCORING=[
+    [null,'0-5 жил -1оноо',null,'6-10 жил -3оноо',null,'11-дээш жил -5оноо'],
+    ['285ш 1оноо','284-255ш 2оноо','254-225ш 3оноо','224-195ш 4оноо','194-өөс бага 5оноо'],
+    ['0-6% 1оноо','7-12% 2оноо','13-18% 3оноо','19-24% 4оноо','25%-иас их 5оноо'],
+    ['5эгнээ шинэ, унжаагүй 1оноо','5эгнээ хольж татсан 2оноо','4эгнээ шинэ, унжаагүй 4оноо','5эгнээ суларч унжсан 3оноо','4эгнээ хуучин, суларч унжсан 5оноо'],
+    ['25см бага 1оноо','26-35см 2оноо','36-45см 3оноо','46-55см 4оноо','56см+ 5оноо'],
+    ['Сеткэн тортой 1оноо','Нүдэлгээ сулраагүй 2оноо','Тасарч суларсан 3оноо','Нүдэлгээ суларсан 4оноо','Нүдэлгээгүй 5оноо'],
+    ['0-10см 1оноо','11-15см 2оноо','16-20см 3оноо','21-25см 4оноо','26см+ 5оноо'],
+    ['121см+ 1оноо','116-120см 2оноо','111-115см 3оноо','106-110см 4оноо','105см- 5оноо'],
+    ['20см- 1оноо','21-30см 2оноо','31-40см 3оноо','41-50см 4оноо','51см+ 5оноо'],
+    ['50- 1оноо','51-200 2оноо','201-500 3оноо','501-1000 4оноо','1000+ 5оноо'],
+  ];
+  const kmPairs=[];
+  for(let km=681;km<=701;km++) kmPairs.push({km,recB:records.find(r=>r.km===km&&r.side==='Баруун')||null,recZ:records.find(r=>r.km===km&&r.side==='Зүүн')||null});
+  const nDataRows=kmPairs.length*2;
+  const nR=9+nDataRows;
+  const grid=Array.from({length:nR},()=>new Array(NCOLS).fill(null));
+  grid[1][0]='КМ'; grid[1][1]='Аль тал'; grid[1][2]='ТОРОН ХАШААНЫ БАЙДАЛ';
+  CC.forEach((cc,i)=>{ const s=cc.pks!==undefined?cc.pks:cc.single; grid[2][s]=CNAMES[i]; });
+  grid[2][TOTAL_COL]='Нийт оноо';
+  grid[2][117]='10-16 Маш бага эрсдэлтэй'; grid[2][118]='17-23 Бага эрсдэлтэй';
+  grid[2][119]='24-30 Дунд эрсдэлтэй'; grid[2][120]='31-37 Их эрсдэлтэй'; grid[2][121]='38+ Маш их эрсдэлтэй';
+  CC.forEach((cc,i)=>{
+    if(cc.dun!==undefined) grid[3][cc.dun]='ДҮН';
+    grid[3][cc.on]='Оноо';
+    if(cc.ext!==undefined) grid[3][cc.ext]='Тэнцэхгүй шонгийн тоо';
+    const sc=SCORING[i];
+    if(i===0){ grid[3][cc.pks]=sc[1]; grid[5][cc.pks]=sc[3]; grid[7][cc.pks]=sc[5]; }
+    else sc.forEach((s,si)=>{ if(s) grid[3+si][cc.pks!==undefined?cc.pks:cc.single]=s; });
+  });
+  CC.forEach(cc=>{ if(cc.pks===undefined) return; for(let p=0;p<10;p++) grid[8][cc.pks+p]=`${p+1}пк`; });
+  function fillRow(row,rec,side,km){
+    row[0]=km; row[1]=side;
+    const sRaw=shonData[String(km)+'-'+side];
+    let score2=null,scores3=null;
+    if(sRaw&&sRaw.pks){
+      const kmTot=sRaw.pks.reduce((s,pk)=>s+(pk.poles?pk.poles.length:0),0);
+      if(kmTot>0) score2=shonCountToScore(kmTot);
+      scores3=sRaw.pks.map(pk=>{
+        const poles=pk.poles||[];
+        const tot=poles.length;
+        if(!tot) return 1;
+        const bad=poles.filter(t=>t==='tentsehgui').length;
+        return tentsehguiPctToScore((bad/tot)*100);
+      });
+    }
+    if(rec){
+      CC.forEach((cc,ci)=>{
+        const vals=rec.vals[ci]||[];
+        if(cc.single!==undefined){ row[cc.single]=vals[0]||0; row[cc.on]=vals[0]||0; }
+        else {
+          for(let p=0;p<10;p++) row[cc.pks+p]=vals[p]||0;
+          const sum=vals.reduce((a,b)=>a+(b||0),0);
+          if(ci===2){row[cc.ext]=sum;row[cc.dun]=sum;}else row[cc.dun]=sum;
+          row[cc.on]=+(sum/10).toFixed(2);
+        }
+      });
+    }
+    if(score2!==null){ for(let p=0;p<10;p++) row[CC[1].pks+p]=score2; row[CC[1].dun]=score2*10; row[CC[1].on]=score2; }
+    if(scores3){
+      const sum3=scores3.reduce((a,b)=>a+b,0);
+      scores3.forEach((s,p)=>{ row[CC[2].pks+p]=s; });
+      row[CC[2].ext]=sum3; row[CC[2].dun]=sum3; row[CC[2].on]=+(sum3/10).toFixed(2);
+    }
+    if(rec){
+      const v=CC.map((cc,ci)=>{ if(cc.single!==undefined) return [row[cc.single]||0]; return Array.from({length:10},(_,p)=>row[cc.pks+p]||0); });
+      const t=+calcTotal({vals:v}).toFixed(2);
+      row[TOTAL_COL]=t;
+      const risk=getRisk(t);
+      [117,118,119,120,121].forEach((c,li)=>{row[c]=risk.l===li+1?km:null;});
+    }
+  }
+  kmPairs.forEach(({km,recB,recZ},pi)=>{
+    fillRow(grid[9+pi*2],recB,'Баруун',km);
+    fillRow(grid[9+pi*2+1],recZ,'Зүүн',km);
+  });
+  const ws=XS.utils.aoa_to_sheet(grid);
+  const merges=[];
+  merges.push({s:{r:1,c:0},e:{r:8,c:0}},{s:{r:1,c:1},e:{r:8,c:1}},{s:{r:1,c:2},e:{r:1,c:TOTAL_COL-1}});
+  CC.forEach((cc)=>{ const s=cc.pks!==undefined?cc.pks:cc.single; if(cc.on>s) merges.push({s:{r:2,c:s},e:{r:2,c:cc.on}}); });
+  CC.forEach(cc=>{ if(cc.pks===undefined) return; for(let r=3;r<=7;r++) if(grid[r][cc.pks]) merges.push({s:{r,c:cc.pks},e:{r,c:cc.pks+9}}); });
+  CC.forEach(cc=>{ if(cc.dun!==undefined) merges.push({s:{r:3,c:cc.dun},e:{r:8,c:cc.dun}}); merges.push({s:{r:3,c:cc.on},e:{r:8,c:cc.on}}); });
+  kmPairs.forEach((_,pi)=>{ merges.push({s:{r:9+pi*2,c:0},e:{r:9+pi*2+1,c:0}}); });
+  ws['!merges']=merges;
+  const cw=[{wch:6},{wch:8}]; for(let i=2;i<NCOLS;i++) cw[i]={wch:6};
+  CC.forEach(cc=>{ const s=cc.pks!==undefined?cc.pks:cc.single; cw[s]={wch:30}; });
+  cw[TOTAL_COL]={wch:10}; ws['!cols']=cw;
+  XS.utils.book_append_sheet(wb,ws,sheetName);
+  const levels=[{l:1,n:'маш бага',r:'10-16'},{l:2,n:'Бага',r:'17-23'},{l:3,n:'Дунд',r:'24-30'},{l:4,n:'Их',r:'31-37'},{l:5,n:'Маш их',r:'38+'}];
+  const filledRecs=kmPairs.flatMap(({recB,recZ})=>[recB,recZ].filter(Boolean));
+  const sumD=[['Малын хориг хашааны эрсдэл нэгтгэл'],[],['№','Эрсдэл','үнэлгээ','баруун тал /км/','баруун нийт','зүүн тал /км/','зүүн нийт','Нийт']];
+  let bT=0,zT=0;
+  levels.forEach((lv,i)=>{
+    const b=filledRecs.filter(r=>r.side==='Баруун'&&getRisk(calcTotal(r)).l===lv.l);
+    const z=filledRecs.filter(r=>r.side==='Зүүн'&&getRisk(calcTotal(r)).l===lv.l);
+    bT+=b.length; zT+=z.length;
+    sumD.push([i+1,lv.n,lv.r,b.map(r=>r.km).join('.'),b.length,z.map(r=>r.km).join('.'),z.length,b.length+z.length]);
+  });
+  sumD.push([null,null,null,null,bT,null,zT,bT+zT]);
+  const ws2=XS.utils.aoa_to_sheet(sumD);
+  ws2['!cols']=[{wch:4},{wch:10},{wch:12},{wch:35},{wch:8},{wch:35},{wch:8},{wch:8}];
+  ws2['!merges']=[{s:{r:0,c:0},e:{r:0,c:7}}];
+  XS.utils.book_append_sheet(wb,ws2,`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-сар`);
+  XS.writeFile(wb,`ПЧ-3-Торон-хашаа-эрсдэл-${today.toISOString().slice(0,10)}.xlsx`);
+  showToast('Excel татагдлаа ✓');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+// ═══════════════════════════════════════════
+// SHON DATA
+// ═══════════════════════════════════════════
+let shonData={};
+let shonKm='', shonSide='Баруун', shonPkIdx=0;
+const SHON_TYPES=['shine','huuchin','modon','tentsehgui'];
+const SHON_INFO={
+  shine:      {label:'Шинэ',      color:'#16a34a',bg:'#dcfce7'},
+  huuchin:    {label:'Хуучин',    color:'#65a30d',bg:'#ecfccb'},
+  modon:      {label:'Модон',     color:'#d97706',bg:'#fef3c7'},
+  tentsehgui: {label:'Тэнцэхгүй',color:'#dc2626',bg:'#fee2e2'},
+};
+function shonKey(km,side){ return km+'-'+side; }
+function getShonEntry(km,side){
+  const k=shonKey(km,side);
+  if(!shonData[k]) shonData[k]={km,side,pks:Array.from({length:10},()=>({poles:[]}))};
+  if(shonData[k].pks[0]&&!shonData[k].pks[0].poles) shonData[k].pks=Array.from({length:10},()=>({poles:[]}));
+  return shonData[k];
+}
+function loadShon(){ try{ shonData=JSON.parse(localStorage.getItem('th_shon')||'{}'); }catch(e){ shonData={}; } }
+function saveShonData(){ localStorage.setItem('th_shon',JSON.stringify(shonData)); }
+
+function openShon(){
+  loadShon();
+  shonKm=sessionPlan[0]?.km||records[0]?.km||'';
+  shonSide='Баруун'; shonPkIdx=0;
+  document.getElementById('homeScreen').classList.remove('active');
+  document.getElementById('shonScreen').classList.add('active');
+  document.getElementById('fabBtn').style.display='none';
+  document.getElementById('exportBtn').style.display='none';
+  renderShon(); bindShonPkNavSwipe();
+}
+function closeShon(){
+  document.getElementById('shonScreen').classList.remove('active');
+  document.getElementById('homeScreen').classList.add('active');
+  document.getElementById('fabBtn').style.display='flex';
+  document.getElementById('exportBtn').style.display='flex';
+  renderShonHomePill();
+}
+function saveShon(){ saveShonData(); renderShonHomePill(); showToast('Шон хадгалагдлаа ✓'); }
+
+function renderShon(){
+  document.getElementById('shonKmInput').value=shonKm||'';
+  document.getElementById('shonBtnB').className='side-btn'+(shonSide==='Баруун'?' ab':'');
+  document.getElementById('shonBtnZ').className='side-btn'+(shonSide==='Зүүн'?' az':'');
+  document.getElementById('shonKmPrev').disabled=!shonKm||parseInt(shonKm)<=1;
+  document.getElementById('shonKmNext').disabled=!shonKm||parseInt(shonKm)>=9999;
+  renderShonPkStrip(); renderShonDrum(); renderShonStats(); renderShonSummary(); updateShonHdr(); updateShonPkNav(); updateShonKmProgress();
+}
+function shonKmGo(dir){ if(!shonKm){ showToast('КМ оруулна уу'); return; } shonKm=parseInt(shonKm)+dir; shonPkIdx=0; renderShon(); }
+function shonKmChange(){ shonKm=parseInt(document.getElementById('shonKmInput').value)||''; shonPkIdx=0; renderShon(); }
+function shonSetSide(s){ shonSide=s; shonPkIdx=0; renderShon(); }
+
+function renderShonPkStrip(){
+  const strip=document.getElementById('shonPkStrip');
+  if(!shonKm){ strip.innerHTML=''; return; }
+  const entry=getShonEntry(shonKm,shonSide);
+  strip.innerHTML=entry.pks.map((pk,i)=>{
+    const n=pk.poles.length;
+    return `<button class="pk-tab ${i===shonPkIdx?'active':''} ${n>0?'filled':''}" onclick="shonGoPk(${i})">${i+1}<div class="pk-dot"></div></button>`;
+  }).join('');
+  strip.querySelector('.active')?.scrollIntoView({inline:'center',behavior:'smooth'});
+}
+function shonGoPk(i){ shonPkIdx=i; renderShon(); }
+function shonPkDir(d){ const n=shonPkIdx+d; if(n>=0&&n<=9){ shonPkIdx=n; renderShon(); } }
+function updateShonPkNav(){
+  document.getElementById('shonPkNavNum').textContent=(shonPkIdx+1)+'-р пикет';
+  document.getElementById('shonPkPrev').disabled=shonPkIdx===0;
+  document.getElementById('shonPkNext').disabled=shonPkIdx===9;
+  if(!shonKm){ document.getElementById('shonPkNavSub').textContent=''; return; }
+  const entry=getShonEntry(shonKm,shonSide);
+  const done=entry.pks.filter(p=>p.poles.length>0).length;
+  document.getElementById('shonPkNavSub').textContent=done+'/10 пк дууссан';
+  const n=entry.pks[shonPkIdx].poles.length;
+  document.getElementById('shonPkNum').textContent=shonPkIdx+1;
+  document.getElementById('shonPkSub').textContent=n+' шон бүртгэсэн';
+  document.getElementById('shonPkProg').textContent=done+'/10 пк';
+}
+
+function renderShonDrum(){
+  const scrollEl=document.getElementById('shonDrumScroll');
+  const centerEl=document.getElementById('shonDrumCenter');
+  if(!scrollEl||!centerEl) return;
+  if(!shonKm){
+    scrollEl.innerHTML='';
+    centerEl.innerHTML='<div class="sd-center-box"><div class="sd-center-num" style="font-size:14px;background:var(--muted)">—</div><div class="sd-center-lbl">КМ дугаар оруулна уу</div></div>';
+    return;
+  }
+  const poles=getShonEntry(shonKm,shonSide).pks[shonPkIdx].poles;
+  const n=poles.length;
+  centerEl.innerHTML=`<div class="sd-center-box"><div class="sd-center-num">${n+1}</div><div class="sd-center-lbl">← Шон бүртгэх</div></div>`;
+  if(!n){ scrollEl.innerHTML='<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;padding:10px">Доорх товчоор бүртгэнэ</div>'; return; }
+  scrollEl.innerHTML=poles.map((t,i)=>{
+    const info=SHON_INFO[t];
+    const isLast=i===n-1;
+    return `<div class="sd-item" style="background:${info.bg};border:1.5px solid ${info.color}40" onclick="shonEditPole(${i})">
+      <div class="sd-num" style="background:${info.color}">${i+1}</div>
+      <div class="sd-lbl" style="color:${info.color}">${info.label}</div>
+      ${isLast?'<div class="sd-undo" onclick="event.stopPropagation();shonUndo()">✕</div>':''}
+    </div>`;
+  }).join('');
+  scrollEl.scrollTop=scrollEl.scrollHeight;
+}
+function shonEditPole(idx){
+  if(!shonKm) return;
+  const pk=getShonEntry(shonKm,shonSide).pks[shonPkIdx];
+  const types=Object.keys(SHON_INFO);
+  const cur=types.indexOf(pk.poles[idx]);
+  pk.poles[idx]=types[(cur+1)%types.length];
+  saveShonData(); renderShonDrum(); renderShonStats(); updateShonHdr(); renderShonSummary(); updateShonPkNav(); renderShonPkStrip();
+}
+function shonRegister(type){
+  if(!shonKm){ showToast('КМ оруулна уу'); return; }
+  const pk=getShonEntry(shonKm,shonSide).pks[shonPkIdx];
+  pk.poles.push(type);
+  saveShonData(); renderShonDrum(); renderShonStats(); renderShonPkStrip(); updateShonHdr(); renderShonSummary(); updateShonPkNav();
+  if(navigator.vibrate) navigator.vibrate(25);
+}
+function shonUndo(){
+  if(!shonKm) return;
+  const pk=getShonEntry(shonKm,shonSide).pks[shonPkIdx];
+  if(!pk.poles.length) return;
+  const removed=SHON_INFO[pk.poles.pop()];
+  saveShonData(); renderShonDrum(); renderShonStats(); renderShonPkStrip(); updateShonHdr(); renderShonSummary(); updateShonPkNav();
+  showToast(removed.label+' буцааллаа');
+}
+function renderShonStats(){
+  if(!shonKm) return;
+  const poles=getShonEntry(shonKm,shonSide).pks[shonPkIdx].poles;
+  const cnt={shine:0,huuchin:0,modon:0,tentsehgui:0};
+  poles.forEach(t=>{ if(cnt[t]!==undefined) cnt[t]++; });
+  SHON_TYPES.forEach(t=>{ const el=document.getElementById('ss_'+t); if(el) el.textContent=cnt[t]; });
+  const el=document.getElementById('ss_total'); if(el) el.textContent=poles.length;
+}
+function updateShonHdr(){
+  if(!shonKm) return;
+  const entry=getShonEntry(shonKm,shonSide);
+  let tot=0,bad=0;
+  entry.pks.forEach(pk=>{ tot+=pk.poles.length; bad+=pk.poles.filter(t=>t==='tentsehgui').length; });
+  document.getElementById('shonTotalNum').textContent=tot;
+  document.getElementById('shonPctNum').textContent=(tot>0?((bad/tot)*100).toFixed(1):0)+'%';
+}
+function renderShonSummary(){
+  const el=document.getElementById('shonSummaryTable');
+  if(!el||!shonKm){ if(el) el.innerHTML=''; return; }
+  const entry=getShonEntry(shonKm,shonSide);
+  let tS=0,tH=0,tM=0,tT=0;
+  let html=`<table class="shon-tbl"><tr><th>Пк</th><th>Шинэ</th><th>Хуучин</th><th>Модон</th><th style="color:#ffcdd2">Тэнцэхгүй</th><th>Нийт</th><th style="color:#ffcdd2">%</th></tr>`;
+  entry.pks.forEach((pk,i)=>{
+    const cnt={shine:0,huuchin:0,modon:0,tentsehgui:0};
+    pk.poles.forEach(t=>{ if(cnt[t]!==undefined) cnt[t]++; });
+    const tot=pk.poles.length;
+    const pct=tot>0?((cnt.tentsehgui/tot)*100).toFixed(1):null;
+    tS+=cnt.shine; tH+=cnt.huuchin; tM+=cnt.modon; tT+=cnt.tentsehgui;
+    html+=`<tr style="${i===shonPkIdx?'background:var(--forest-lite)':''}">
+      <td style="font-weight:800;color:var(--forest)">${i+1}пк</td>
+      <td class="col-good">${cnt.shine||'—'}</td><td>${cnt.huuchin||'—'}</td>
+      <td style="color:#d97706">${cnt.modon||'—'}</td>
+      <td class="col-bad">${cnt.tentsehgui||'—'}</td>
+      <td style="font-weight:800">${tot||'—'}</td>
+      <td class="${parseFloat(pct)>=25?'col-bad':''}" style="font-weight:700">${pct!=null?pct+'%':'—'}</td>
+    </tr>`;
+  });
+  const g=tS+tH+tM+tT;
+  const gp=g>0?((tT/g)*100).toFixed(1):'0';
+  html+=`<tr><td style="font-weight:900;color:var(--forest)">КМ</td>
+    <td class="col-good">${tS}</td><td>${tH}</td>
+    <td style="color:#d97706">${tM}</td><td class="col-bad">${tT}</td>
+    <td style="font-weight:900">${g}</td>
+    <td class="${parseFloat(gp)>=25?'col-bad':''}" style="font-weight:900">${gp}%</td>
+  </tr></table>`;
+  el.innerHTML=html;
+}
+
+// ── Shon home list ────────────────────────
+let shonSelectMode=false;
+let shonSelected=new Set();
+let shonLongPressTimer=null;
+
+function renderShonHomePill(){
+  const pill=document.getElementById('shonSummaryPill');
+  const keys=Object.keys(shonData);
+  if(pill) pill.textContent=keys.length?keys.length+' КМ':'';
+  renderShonHomeList();
+}
+function renderShonHomeList(){
+  const list=document.getElementById('shonHomeList');
+  if(!list) return;
+  const keys=Object.keys(shonData);
+  if(!keys.length){ list.innerHTML='<div style="text-align:center;padding:10px;color:var(--muted);font-size:12px">Бүртгэл байхгүй байна</div>'; return; }
+  const sorted=keys.slice().sort((a,b)=>{
+    const [kmA,sA]=a.split('-'); const [kmB,sB]=b.split('-');
+    if(kmA!==kmB) return parseInt(kmA)-parseInt(kmB);
+    return sA==='Баруун'?-1:1;
+  });
+  list.innerHTML=sorted.map(key=>{
+    const e=shonData[key];
+    const km=e.km, side=e.side||key.split('-')[1]||'';
+    const totalPoles=e.pks.reduce((s,pk)=>s+(pk.poles||[]).length,0);
+    const badPoles=e.pks.reduce((s,pk)=>s+(pk.poles||[]).filter(t=>t==='tentsehgui').length,0);
+    const pct=totalPoles>0?((badPoles/totalPoles)*100).toFixed(1):'0';
+    const isB=side==='Баруун';
+    const sel=shonSelected.has(key);
+    return `<div class="shon-list-item ${isB?'side-b':'side-z'} ${sel?'selected':''}"
+      id="sli_${key.replace(/[^a-zA-Z0-9]/g,'_')}"
+      onclick="shonListTap('${key}')"
+      ontouchstart="shonListTouchStart(event,'${key}')"
+      ontouchend="shonListTouchEnd(event,'${key}')"
+      ontouchmove="shonListTouchMove()">
+      <div class="shon-item-km">${km}</div>
+      <div class="shon-item-side ${isB?'b':'z'}">${side}</div>
+      <div class="shon-item-info">
+        <div class="shon-item-total">${totalPoles} шон</div>
+        <div class="shon-item-pct">Тэнцэхгүй: ${pct}%</div>
+      </div>
+      <div class="shon-item-check">${sel?'✓':''}</div>
+    </div>`;
+  }).join('');
+}
+function shonListTap(key){
+  clearTimeout(shonLongPressTimer);
+  if(shonSelectMode){
+    if(shonSelected.has(key)) shonSelected.delete(key); else shonSelected.add(key);
+    if(shonSelected.size===0) shonCancelSelect(); else{ updateShonSelectBar(); renderShonHomeList(); }
+  } else {
+    const e=shonData[key];
+    shonKm=e.km; shonSide=e.side||key.split('-')[1]||'Баруун'; shonPkIdx=0; openShon();
+  }
+}
+function shonListTouchStart(ev,key){ shonLongPressTimer=setTimeout(()=>{ if(navigator.vibrate) navigator.vibrate([40,20,40]); shonSelectMode=true; shonSelected.add(key); updateShonSelectBar(); renderShonHomeList(); },500); }
+function shonListTouchEnd(ev,key){ clearTimeout(shonLongPressTimer); }
+function shonListTouchMove(){ clearTimeout(shonLongPressTimer); }
+function updateShonSelectBar(){
+  const bar=document.getElementById('shonSelectBar');
+  const cnt=document.getElementById('shonSelCount');
+  if(bar) bar.classList.toggle('show',shonSelectMode&&shonSelected.size>0);
+  if(cnt) cnt.textContent=shonSelected.size+' сонгогдлоо';
+}
+function shonSelectAll(){ Object.keys(shonData).forEach(k=>shonSelected.add(k)); updateShonSelectBar(); renderShonHomeList(); }
+function shonCancelSelect(){ shonSelectMode=false; shonSelected.clear(); document.getElementById('shonSelectBar')?.classList.remove('show'); renderShonHomeList(); }
+function shonDeleteSelected(){
+  if(!shonSelected.size) return;
+  if(!confirm(`${shonSelected.size} бүртгэл устгах уу?`)) return;
+  shonSelected.forEach(k=>delete shonData[k]);
+  saveShonData(); showToast('Устгагдлаа'); shonSelected.clear(); shonSelectMode=false; document.getElementById('shonSelectBar')?.classList.remove('show');
+  renderShonHomePill();
+}
+
+// FIX 3: origShon removed — only origShonData used
+function shonDownloadSelected(){
+  if(!shonSelected.size){ showToast('Юу ч сонгогдоогүй'); return; }
+  const tempKeys=[...shonSelected];
+  const tmpData={};
+  tempKeys.forEach(k=>{ if(shonData[k]) tmpData[k]=shonData[k]; });
+  const origShonData=shonData;
+  shonData=tmpData;
+  exportShonAsRisk();
+  shonData=origShonData;
+}
+
+function bindShonPkNavSwipe(){
+  const nav=document.getElementById('shonPkNav');
+  if(!nav||nav._sb) return; nav._sb=true;
+  let sx=0;
+  nav.addEventListener('touchstart',e=>{ sx=e.touches[0].clientX; },{passive:true});
+  nav.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)<40) return;
+    if(dx<0){ if(shonPkIdx<9){ shonPkDir(1); } else { shonNextKm(); } } else { shonPkDir(-1); }
+  },{passive:true});
+}
+function shonNextKm(){
+  if(!shonKm) return;
+  saveShonData();
+  const cur=parseInt(shonKm);
+  let nextKm=null;
+  if(sessionPlan&&sessionPlan.length){
+    const idx=sessionPlan.findIndex(s=>s.km===cur&&s.side===shonSide);
+    if(idx>=0&&idx<sessionPlan.length-1){ const next=sessionPlan[idx+1]; nextKm=next.km; shonSide=next.side; }
+    else { nextKm=cur+1; }
+  } else { nextKm=cur+1; }
+  if(nextKm&&nextKm<=701){ shonKm=nextKm; shonPkIdx=0; renderShon(); showToast(`→ ${nextKm}КМ ${shonSide}`); }
+  else { showToast('Сүүлийн КМ дууслаа ✓'); }
+}
+function updateShonKmProgress(){
+  const el=document.getElementById('shonKmProgress');
+  if(!el) return;
+  if(!shonKm){ el.textContent='—'; return; }
+  const cur=parseInt(shonKm);
+  if(sessionPlan&&sessionPlan.length){
+    const idx=sessionPlan.findIndex(s=>s.km===cur&&s.side===shonSide);
+    if(idx>=0){ el.textContent=`${idx+1}/${sessionPlan.length}КМ`; return; }
+  }
+  el.textContent=`${cur-680}/21КМ`;
+}
+
+// FIX 2 applied: sum3/10 (not validSc3.length)
+function exportShonAsRisk(){
+  const XS=getXS();
+  if(!XS){ showToast('Хуудсыг дахин ачааллана уу'); return; }
+  let sd={};
+  try{ sd=JSON.parse(localStorage.getItem('th_shon')||'{}'); }catch(e){}
+  if(typeof shonData!=='undefined') Object.assign(sd,shonData);
+  const shonKeys=Object.keys(sd);
+  if(!shonKeys.length){ showToast('Шонгийн судалгаа байхгүй байна'); return; }
+  const today=new Date();
+  const sheetName=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')} эрсдэл`;
+  const kmMin=681,kmMax=701;
+  function getPkTotal(pk){ if(!pk) return 0; if(pk.poles) return pk.poles.length; return (pk.shine||0)+(pk.huuchin||0)+(pk.modon||0)+(pk.tentsehgui||0); }
+  function getPkBad(pk){ if(!pk) return 0; if(pk.poles) return pk.poles.filter(t=>t==='tentsehgui').length; return pk.tentsehgui||0; }
+  const CC=[{pks:2,dun:12,on:13},{pks:14,dun:24,on:25},{pks:26,ext:36,dun:37,on:38},{pks:39,dun:49,on:50},{pks:51,dun:61,on:62},{pks:63,dun:73,on:74},{pks:75,dun:85,on:86},{pks:87,dun:97,on:98},{pks:99,dun:109,on:110},{single:114,on:115}];
+  const TOTAL_COL=116,NCOLS=126;
+  const CNAMES=['Торон хашаанд их засвар хийсэн болон урсгалаар их засварын хэмжээнд зассан эсэх','1 км дэх торон хашааны шонгийн тоо','1км дэх тэнцэхгүй шонгийн эзлэх хувь','Торон утасны эгнээний тоо болон тор татсан байдал','Босоо нүдэлгээ хийгдсэн байдал','Ташуу нүдэлгээ хийгдсэн байдал','Торны хамгийн доод утсыг газрын дээд гадаргаас татсан байдал','Торон хашааны өндөр','Торон хашаа цас элс шороонд дарагддаг байдал','Малын нягтрал'];
+  const SCORING=[[null,'0-5 жил -1оноо',null,'6-10 жил -3оноо',null,'11-дээш жил -5оноо'],['285ш 1оноо','284-255ш 2оноо','254-225ш 3оноо','224-195ш 4оноо','194-өөс бага 5оноо'],['0-6% 1оноо','7-12% 2оноо','13-18% 3оноо','19-24% 4оноо','25%-иас их 5оноо'],['5эгнээ шинэ 1оноо','5эгнээ хольж 2оноо','4эгнээ шинэ 4оноо','5эгнээ суларсан 3оноо','4эгнээ хуучин 5оноо'],['25см бага 1оноо','26-35см 2оноо','36-45см 3оноо','46-55см 4оноо','56см+ 5оноо'],['Сеткэн 1оноо','Сулраагүй 2оноо','Тасарсан 3оноо','Суларсан 4оноо','Нүдэлгээгүй 5оноо'],['0-10см 1оноо','11-15см 2оноо','16-20см 3оноо','21-25см 4оноо','26см+ 5оноо'],['121см+ 1оноо','116-120см 2оноо','111-115см 3оноо','106-110см 4оноо','105см- 5оноо'],['20см- 1оноо','21-30см 2оноо','31-40см 3оноо','41-50см 4оноо','51см+ 5оноо'],['50- 1оноо','51-200 2оноо','201-500 3оноо','501-1000 4оноо','1000+ 5оноо']];
+  const kmPairs=[];
+  for(let km=kmMin;km<=kmMax;km++) kmPairs.push(km);
+  const nDataRows=kmPairs.length*2;
+  const nR=9+nDataRows;
+  const grid=Array.from({length:nR},()=>new Array(NCOLS).fill(null));
+  grid[1][0]='КМ'; grid[1][1]='Аль тал'; grid[1][2]='ТОРОН ХАШААНЫ БАЙДАЛ';
+  CC.forEach((cc,i)=>{ const s=cc.pks!==undefined?cc.pks:cc.single; grid[2][s]=CNAMES[i]; });
+  grid[2][TOTAL_COL]='Нийт оноо';
+  grid[2][117]='10-16 Маш бага'; grid[2][118]='17-23 Бага'; grid[2][119]='24-30 Дунд'; grid[2][120]='31-37 Их'; grid[2][121]='38+ Маш их';
+  CC.forEach((cc,i)=>{
+    if(cc.dun!==undefined) grid[3][cc.dun]='ДҮН'; grid[3][cc.on]='Оноо';
+    if(cc.ext!==undefined) grid[3][cc.ext]='Тэнцэхгүй шонгийн тоо';
+    const sc=SCORING[i];
+    if(i===0){ grid[3][cc.pks]=sc[1]; grid[5][cc.pks]=sc[3]; grid[7][cc.pks]=sc[5]; }
+    else sc.forEach((s,si)=>{ if(s) grid[3+si][cc.pks!==undefined?cc.pks:cc.single]=s; });
+  });
+  CC.forEach(cc=>{ if(cc.pks===undefined) return; for(let p=0;p<10;p++) grid[8][cc.pks+p]=`${p+1}пк`; });
+  const SIDES=['Баруун','Зүүн'];
+  kmPairs.forEach((km,ki)=>{
+    SIDES.forEach((side,si)=>{
+      const ri=9+ki*2+si;
+      grid[ri][0]=km; grid[ri][1]=side;
+      const sEntry=sd[String(km)+'-'+side];
+      if(!sEntry||!sEntry.pks) return;
+      const kmTot=sEntry.pks.reduce((s,pk)=>s+getPkTotal(pk),0);
+      if(kmTot>0){
+        const s2=kmTot>=285?1:kmTot>=255?2:kmTot>=225?3:kmTot>=195?4:5;
+        for(let p=0;p<10;p++) grid[ri][CC[1].pks+p]=s2;
+        grid[ri][CC[1].dun]=s2*10; grid[ri][CC[1].on]=s2;
+      }
+      const sc3=sEntry.pks.map(pk=>{
+        const tot=getPkTotal(pk); if(!tot) return null;
+        const bad=getPkBad(pk); const pct=bad/tot*100;
+        return pct<=6?1:pct<=12?2:pct<=18?3:pct<=24?4:5;
+      });
+      const validSc3=sc3.filter(v=>v!==null);
+      if(validSc3.length>0){
+        const sum3=validSc3.reduce((a,b)=>a+b,0);
+        sc3.forEach((s,p)=>{ if(s!==null) grid[ri][CC[2].pks+p]=s; });
+        grid[ri][CC[2].ext]=sum3; grid[ri][CC[2].dun]=sum3;
+        // FIX 2: divide by 10, not validSc3.length
+        grid[ri][CC[2].on]=+(sum3/10).toFixed(2);
+      }
+    });
+  });
+  const ws=XS.utils.aoa_to_sheet(grid);
+  const merges=[];
+  merges.push({s:{r:1,c:0},e:{r:8,c:0}},{s:{r:1,c:1},e:{r:8,c:1}},{s:{r:1,c:2},e:{r:1,c:TOTAL_COL-1}});
+  CC.forEach((cc)=>{ const s=cc.pks!==undefined?cc.pks:cc.single; if(cc.on>s) merges.push({s:{r:2,c:s},e:{r:2,c:cc.on}}); });
+  CC.forEach(cc=>{ if(cc.pks===undefined) return; for(let r=3;r<=7;r++) if(grid[r][cc.pks]) merges.push({s:{r,c:cc.pks},e:{r,c:cc.pks+9}}); });
+  CC.forEach(cc=>{ if(cc.dun!==undefined) merges.push({s:{r:3,c:cc.dun},e:{r:8,c:cc.dun}}); merges.push({s:{r:3,c:cc.on},e:{r:8,c:cc.on}}); });
+  kmPairs.forEach((_,ki)=>{ merges.push({s:{r:9+ki*2,c:0},e:{r:9+ki*2+1,c:0}}); });
+  ws['!merges']=merges;
+  const cw=[{wch:6},{wch:8}]; for(let i=2;i<NCOLS;i++) cw[i]={wch:6};
+  CC.forEach(cc=>{ cw[cc.pks!==undefined?cc.pks:cc.single]={wch:28}; }); cw[TOTAL_COL]={wch:10}; ws['!cols']=cw;
+  const wb=XS.utils.book_new();
+  XS.utils.book_append_sheet(wb,ws,sheetName);
+  XS.writeFile(wb,`ПЧ-3-Шалгуур23-${today.toISOString().slice(0,10)}.xlsx`);
+  showToast('Шалгуур 2,3 Excel татагдлаа ✓');
+}
+
+// ═══════════════════════════════════════════
+// PWA INSTALL — FIX 1: getElementById('installBtn') ✓
+// ═══════════════════════════════════════════
+let _deferredPrompt=null;
+const INSTALL_KEY='pwa_installed';
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); _deferredPrompt=e; if(!localStorage.getItem(INSTALL_KEY)) showInstallPrompt('android'); });
+window.addEventListener('appinstalled',()=>{ localStorage.setItem(INSTALL_KEY,'1'); hideInstallPrompt(); showToast('✅ Апп суулгагдлаа!'); });
+function showInstallPrompt(type){
+  const overlay=document.getElementById('installOverlay');
+  const steps=document.getElementById('installSteps');
+  // FIX 1: 'installBtn' (not 'installPrimaryBtn')
+  const btn=document.getElementById('installBtn');
+  if(!overlay||!btn) return;
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(type==='android'&&_deferredPrompt){
+    steps.innerHTML='Android Chrome-оор нэг товчлолоор суулгана';
+    btn.textContent='📲 Суулгах'; btn.onclick=doInstall;
+  } else if(isIOS){
+    steps.innerHTML='1️⃣ Доорх <b>Share</b> (□↑) товч дарна<br>2️⃣ <b>Add to Home Screen</b> сонгоно<br>3️⃣ <b>Add</b> дарна';
+    btn.textContent='✅ Ойлголоо'; btn.onclick=dismissInstallForever;
+  } else {
+    steps.innerHTML='Chrome: хаягийн мөрний <b>⋮ → Нүүр дэлгэцэнд нэмэх</b>';
+    btn.textContent='✅ Ойлголоо'; btn.onclick=dismissInstallForever;
+  }
+  overlay.classList.add('show');
+}
+function hideInstallPrompt(){ document.getElementById('installOverlay')?.classList.remove('show'); }
+function doInstall(){
+  if(_deferredPrompt){ _deferredPrompt.prompt(); _deferredPrompt.userChoice.then(r=>{ if(r.outcome==='accepted') localStorage.setItem(INSTALL_KEY,'1'); hideInstallPrompt(); _deferredPrompt=null; }); }
+  else hideInstallPrompt();
+}
+function dismissInstall(){ hideInstallPrompt(); }
+function dismissInstallForever(){ localStorage.setItem(INSTALL_KEY,'1'); hideInstallPrompt(); }
+function checkInstallPrompt(){
+  if(localStorage.getItem(INSTALL_KEY)) return;
+  const isStandalone=window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone;
+  if(isStandalone){ localStorage.setItem(INSTALL_KEY,'1'); return; }
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(isIOS) setTimeout(()=>showInstallPrompt('ios'),1500);
+}
+(function preventClose(){
+  history.pushState({app:'toron'},'',' ');
+  window.addEventListener('popstate',()=>{
+    if(document.getElementById('entryScreen')?.classList.contains('active')) cancelEntry();
+    else if(document.getElementById('shonScreen')?.classList.contains('active')) closeShon();
+    history.pushState({app:'toron'},'',' ');
+  });
+})();
+
+// ═══════════════════════════════════════════
+// FIREBASE SYNC
+// ═══════════════════════════════════════════
+const FB_CONFIG = {
+  apiKey: "AIzaSyCXeyaM1X9wJVsp9fr-Osj9H8viXp8camY",
+  authDomain: "toronhashaa.firebaseapp.com",
+  databaseURL: "https://toronhashaa-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "toronhashaa",
+  storageBucket: "toronhashaa.firebasestorage.app",
+  messagingSenderId: "467317142629",
+  appId: "1:467317142629:web:d35fe5a0ddac4373f7428c"
+};
+
+let fbApp=null, fbDb=null, fbSyncing=false;
+const DEVICE_ID = (()=>{
+  let id=localStorage.getItem('th_device');
+  if(!id){ id='d'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); localStorage.setItem('th_device',id); }
+  return id;
+})();
+
+// Firebase SDK-г CDN-ээс динамикаар ачаална
+function initFirebase(){
+  return new Promise((resolve)=>{
+    if(fbDb){ resolve(true); return; }
+    // Firebase SDK v9 compat
+    const script1=document.createElement('script');
+    script1.src='https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js';
+    script1.onload=()=>{
+      const script2=document.createElement('script');
+      script2.src='https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js';
+      script2.onload=()=>{
+        try{
+          if(!firebase.apps.length) fbApp=firebase.initializeApp(FB_CONFIG);
+          else fbApp=firebase.app();
+          fbDb=firebase.database();
+          showFbStatus('☁️ Firebase холбогдлоо','#16a34a');
+          resolve(true);
+        }catch(e){ showFbStatus('⚠️ Firebase алдаа: '+e.message,'#dc2626'); resolve(false); }
+      };
+      script2.onerror=()=>{ showFbStatus('⚠️ Firebase SDK ачааллагдсангүй','#dc2626'); resolve(false); };
+      document.head.appendChild(script2);
+    };
+    script1.onerror=()=>{ showFbStatus('⚠️ Интернэт холболт алдаа','#dc2626'); resolve(false); };
+    document.head.appendChild(script1);
+  });
+}
+
+// Статус toast
+let fbStatusTimer=null;
+function showFbStatus(msg,color){
+  let el=document.getElementById('fbStatus');
+  if(!el){
+    el=document.createElement('div');
+    el.id='fbStatus';
+    el.style.cssText='position:fixed;top:58px;right:10px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;color:#fff;z-index:500;transition:.3s;opacity:0;pointer-events:none';
+    document.body.appendChild(el);
+  }
+  el.textContent=msg; el.style.background=color||'#1B4332'; el.style.opacity='1';
+  clearTimeout(fbStatusTimer);
+  fbStatusTimer=setTimeout(()=>{ el.style.opacity='0'; },2500);
+}
+
+// Өгөгдлийг Firebase руу push (records + shonData)
+async function fbPush(){
+  if(!navigator.onLine) return;
+  const ok=await initFirebase();
+  if(!ok||!fbDb) return;
+  fbSyncing=true;
+  try{
+    const data={
+      records: JSON.parse(localStorage.getItem('th_r')||'[]'),
+      shon:    JSON.parse(localStorage.getItem('th_shon')||'{}'),
+      updatedAt: Date.now(),
+      deviceId: DEVICE_ID
+    };
+    await fbDb.ref('surveys/'+DEVICE_ID).set(data);
+    showFbStatus('☁️ Хадгалагдлаа','#16a34a');
+  }catch(e){ showFbStatus('⚠️ Sync алдаа','#dc2626'); }
+  fbSyncing=false;
+}
+
+// Менежерийн view: бүх device-н өгөгдлийг татах
+async function fbPullAll(){
+  if(!navigator.onLine){ showToast('Интернэт байхгүй байна'); return; }
+  const ok=await initFirebase();
+  if(!ok||!fbDb){ showToast('Firebase холбогдоогүй'); return; }
+  showFbStatus('📥 Татаж байна...','#1B4332');
+  try{
+    const snap=await fbDb.ref('surveys').once('value');
+    const all=snap.val()||{};
+    const devices=Object.keys(all);
+    if(!devices.length){ showToast('Firebase дээр өгөгдөл байхгүй'); return; }
+    // Бүх device-н records нэгтгэх (давхардлыг km+side-аар шийднэ)
+    const merged={};
+    const mergedShon={};
+    devices.forEach(devId=>{
+      const d=all[devId];
+      if(d.records) d.records.forEach(r=>{
+        const key=r.km+'|'+r.side;
+        if(!merged[key]||r.date>merged[key].date) merged[key]=r;
+      });
+      if(d.shon) Object.assign(mergedShon, d.shon);
+    });
+    records=Object.values(merged);
+    shonData=mergedShon;
+    saveAll();
+    saveShonData();
+    renderHome();
+    renderShonHomePill();
+    showToast(`✅ ${devices.length} төхөөрөмжийн өгөгдөл нэгдлээ (${records.length} бүртгэл)`);
+    showFbStatus(`✅ ${devices.length} device нэгдлээ`,'#16a34a');
+  }catch(e){ showFbStatus('⚠️ Татах алдаа: '+e.message,'#dc2626'); }
+}
+
+// Хадгалах бүрт Firebase-д push хийнэ
+const _origSaveAll=saveAll;
+function saveAll(){
+  _origSaveAll();
+  if(navigator.onLine) setTimeout(fbPush, 300);
+}
+const _origSaveShonData=saveShonData;
+function saveShonData(){
+  _origSaveShonData();
+  if(navigator.onLine) setTimeout(fbPush, 300);
+}
+
+// Онлайн болоход автомат sync
+window.addEventListener('online',()=>{ showFbStatus('🌐 Интернэт холбогдлоо','#2D6A4F'); fbPush(); });
+window.addEventListener('offline',()=>{ showFbStatus('📵 Офлайн горим','#d97706'); });
+
+// Менежерийн товч home-д нэмэх
+function renderManagerBtn(){
+  const existing=document.getElementById('managerBtn');
+  if(existing) return;
+  const btn=document.createElement('button');
+  btn.id='managerBtn';
+  btn.innerHTML='👥 Бүгдийн өгөгдөл татах';
+  btn.style.cssText='position:fixed;top:60px;left:0;right:0;margin:6px 14px 0;height:40px;border-radius:10px;background:#2D6A4F;color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;z-index:150;display:none';
+  btn.onclick=fbPullAll;
+  document.body.appendChild(btn);
+  // Менежерийн горим: URL-д ?manager байвал товч харуулна
+  if(location.search.includes('manager')||location.hash.includes('manager')){
+    btn.style.display='block';
+    document.querySelector('.hdr-sub').textContent='ПЧ-3 · МЕНЕЖЕРИЙН ГОРИМ 👔';
+  }
+}
+
+// INIT
+loadAll(); loadShon(); renderHome(); renderShonHomePill(); checkInstallPrompt();
+renderManagerBtn();
+// Эхлэхэд автомат push
+if(navigator.onLine) setTimeout(fbPush, 2000);
+</script>
+</body>
+</html>
