@@ -284,6 +284,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
 .shon-item-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
 .shon-chip{font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px}
 .sync-card{display:flex;align-items:center;gap:10px;margin:12px 14px 0;padding:9px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;cursor:pointer}
+.sync-recover{margin:6px 14px 0;text-align:center}
+.sync-recover-btn{background:none;border:none;font-size:11.5px;font-weight:700;color:var(--bark);cursor:pointer;padding:5px 10px;text-decoration:underline}
+.sync-recover-btn:disabled{opacity:.5;pointer-events:none}
 .sync-card:active{transform:scale(.99)}
 .sync-icon{font-size:18px}
 .sync-info{flex:1;min-width:0}
@@ -401,6 +404,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
       <div class="sync-sub" id="syncSub">—</div>
     </div>
     <div class="sync-edit">✏️</div>
+  </div>
+  <div class="sync-recover" id="syncRecoverWrap">
+    <button class="sync-recover-btn" id="syncRecoverBtn" onclick="recoverMyData()">↩️ Миний бүртгэлийг сэргээх</button>
   </div>
   <div class="mgr-bar" id="mgrBar">
     <button class="mgr-btn" onclick="fbPullAll()">👥 Бүгдийн өгөгдөл татах</button>
@@ -668,11 +674,21 @@ let currentEntry=null, editingId=null;
 let currentCritIdx=0, currentPkIdx=0;
 let sessSideMode='Б';
 
+// АДМИН болон АЖИЛТАН горим НЭГ localStorage сан хуваалцдаг байсан тул
+// Админ "Бүгдийн өгөгдөл татах" хийхэд нэгтгэсэн үр дүнг th_r/th_shon руу
+// шууд бичиж, дараа нь тухайн ТӨХӨӨРӨМЖ дээр Ажилтан руу шилжихэд бусад бүх
+// хүний мэдээлэл "чинийх" мэт харагддаг, улмаар дараагийн sync үед тэдгээрийг
+// Firebase рүү тухайн ажилтны нэрээр дахин илгээх эрсдэлтэй байв.
+// Одоо Админ горим өөрийн ТУСДАА санд (th_admin_r/th_admin_shon) бичдэг тул
+// Ажилтны бодит бичлэг хэзээ ч холилдохгүй.
+function rKey(){ return authRole==='admin' ? 'th_admin_r' : 'th_r'; }
+function shKey(){ return authRole==='admin' ? 'th_admin_shon' : 'th_shon'; }
+
 function loadAll(){
-  try{ records=JSON.parse(localStorage.getItem('th_r')||'[]'); }catch(e){ records=[]; }
+  try{ records=JSON.parse(localStorage.getItem(rKey())||'[]'); }catch(e){ records=[]; }
   try{ sessionPlan=JSON.parse(localStorage.getItem('th_sess')||'[]'); }catch(e){ sessionPlan=[]; }
 }
-function saveAll(){ localStorage.setItem('th_r',JSON.stringify(records)); localStorage.setItem('th_sess',JSON.stringify(sessionPlan)); fbSyncLater(); }
+function saveAll(){ localStorage.setItem(rKey(),JSON.stringify(records)); localStorage.setItem('th_sess',JSON.stringify(sessionPlan)); fbSyncLater(); }
 
 function calcCritOnoо(entry,ci){
   const c=CRITERIA[ci];
@@ -1116,7 +1132,7 @@ function exportExcel(){
   if(!records.length){ showToast('Бүртгэл байхгүй байна'); return; }
   const XS=getXS();
   if(!XS){ showToast('Хуудсыг дахин ачааллана уу'); return; }
-  try{ shonData=JSON.parse(localStorage.getItem('th_shon')||'{}'); }catch(e){ shonData={}; }
+  try{ shonData=JSON.parse(localStorage.getItem(shKey())||'{}'); }catch(e){ shonData={}; }
   const wb=XS.utils.book_new();
   const today=new Date();
   const sheetName=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')} эрсдэл`;
@@ -1276,8 +1292,8 @@ function getShonEntry(km,side){
   if(shonData[k].pks[0]&&!shonData[k].pks[0].poles) shonData[k].pks=Array.from({length:10},()=>({poles:[]}));
   return shonData[k];
 }
-function loadShon(){ try{ shonData=JSON.parse(localStorage.getItem('th_shon')||'{}'); }catch(e){ shonData={}; } }
-function saveShonData(){ localStorage.setItem('th_shon',JSON.stringify(shonData)); fbSyncLater(); }
+function loadShon(){ try{ shonData=JSON.parse(localStorage.getItem(shKey())||'{}'); }catch(e){ shonData={}; } }
+function saveShonData(){ localStorage.setItem(shKey(),JSON.stringify(shonData)); fbSyncLater(); }
 
 function openShon(km,side){
   loadShon();
@@ -1606,7 +1622,7 @@ function exportShonAsRisk(){
   const XS=getXS();
   if(!XS){ showToast('Хуудсыг дахин ачааллана уу'); return; }
   let sd={};
-  try{ sd=JSON.parse(localStorage.getItem('th_shon')||'{}'); }catch(e){}
+  try{ sd=JSON.parse(localStorage.getItem(shKey())||'{}'); }catch(e){}
   if(typeof shonData!=='undefined') Object.assign(sd,shonData);
   const shonKeys=Object.keys(sd);
   if(!shonKeys.length){ showToast('Шонгийн судалгаа байхгүй байна'); return; }
@@ -1806,6 +1822,10 @@ function showNamePane(){
 }
 function showApp(){
   document.getElementById('authScreen').classList.add('hide');
+  // INIT дээр loadAll()/loadShon() authRole ХАРААХАН тодорхойлогдоогүй үед
+  // (rKey()/shKey() 'admin' эсэхийг мэдэхгүй) дуудагддаг тул, authRole аль
+  // хэдийн шийдэгдсэн энэ мөчид зөв санг дахин ачаална.
+  loadAll(); loadShon();
   renderWhoBar(); renderSyncCard(); renderManagerBtn();
   renderHome(); renderShonHomePill();
   if(authRole==='worker' && navigator.onLine && !authOffline) setTimeout(fbPush,1500);
@@ -1970,6 +1990,54 @@ function renderWhoBar(){
   // Админ өгөгдөл илгээдэггүй тул sync карт хэрэггүй
   const sc=document.querySelector('.sync-card');
   if(sc) sc.style.display=(authRole==='admin')?'none':'';
+  const rw=document.getElementById('syncRecoverWrap');
+  if(rw) rw.style.display=(authRole==='admin')?'none':'';
+}
+
+// ── МИНИЙ БҮРТГЭЛИЙГ СЭРГЭЭХ ─────────────────────────────
+// Админ горим өнгөрсөн үед НЭГ л localStorage санг хуваалцдаг байсан тул
+// (одоо th_admin_r/th_admin_shon-руу тусад нь салгасан ч) хуучин session-ээс
+// АЛЬ ХЭДИЙН "холилдсон" (бусад ажилтны нэгтгэсэн) өгөгдөл th_r/th_shon дотор
+// үлдсэн байж болзошгүй утаснуудад зориулсан НЭГ УДААГИЙН сэргээх товч.
+// Эх сурвалжийн эрэмбэ:
+//   1) Firebase дэх МИНИЙ ӨӨРИЙН зангилаа (syncKey()) — Админ-ийн ямар ч
+//      үйлдэл үүнийг хэзээ ч дарж бичдэггүй (fbPush зөвхөн worker дээр,
+//      зөвхөн өөрийн syncKey() рүү л бичдэг) тул хамгийн найдвартай.
+//   2) Байхгүй бол th_bak (нэгтгэхийн өмнөх локал нөөц хуулбар).
+async function recoverMyData(){
+  if(authRole!=='worker'){ showToast('Зөвхөн ажилтан ашиглана'); return; }
+  if(!hasClaimedName()){ showToast('Эхлээд нэрээ баталгаажуулна уу'); return; }
+  const curN=records.length, curS=Object.keys(shonData||{}).length;
+  if(!confirm(`Одоо утсан дээр: ${curN} бүртгэл, ${curS} КМ судалгаа байна.
+
+`+
+    `Firebase дэх ТАНЫ ӨӨРИЙН хадгалсан өгөгдлийг татаж, эдгээрийг ОРЛУУЛАХ уу?
+
+`+
+    `Энэ нь Админ горимоор дарж бүртгэл хийсэн үед бусдын мэдээлэл холилдсон байсан бол цэвэрлэхэд хэрэгтэй.`)) return;
+  const btn=document.getElementById('syncRecoverBtn');
+  if(btn) btn.disabled=true;
+  try{
+    if(navigator.onLine){
+      const ok=await initFirebase();
+      if(ok&&fbDb){
+        const snap=await fbDb.ref('surveys/'+syncKey()).once('value');
+        const mine=snap.val();
+        if(mine && (mine.records||mine.shon)){
+          localStorage.setItem(rKey(), JSON.stringify(mine.records||[]));
+          localStorage.setItem(shKey(), JSON.stringify(mine.shon||{}));
+          loadAll(); loadShon(); renderHome(); renderShonHomePill(); renderSyncCard();
+          showToast(`✅ Firebase-ээс сэргээгдлээ: ${(mine.records||[]).length} бүртгэл, ${Object.keys(mine.shon||{}).length} КМ судалгаа`);
+          if(btn) btn.disabled=false;
+          return;
+        }
+      }
+    }
+  }catch(e){ /* доорх th_bak руу шилжинэ */ }
+  // Firebase дээр миний өөрийн бичлэг олдоогүй (эсвэл офлайн) — нөөц хуулбар шалгана
+  if(localStorage.getItem('th_bak')){ restoreBackup(); }
+  else { showToast('Сэргээх өгөгдөл олдсонгүй'); }
+  if(btn) btn.disabled=false;
 }
 
 // ── ТӨХӨӨРӨМЖИЙН НЭР ────────────────────────────────────
@@ -2103,8 +2171,8 @@ function backupLocal(){
   try{
     localStorage.setItem('th_bak', JSON.stringify({
       at: Date.now(),
-      r: localStorage.getItem('th_r')||'[]',
-      shon: localStorage.getItem('th_shon')||'{}'
+      r: localStorage.getItem(rKey())||'[]',
+      shon: localStorage.getItem(shKey())||'{}'
     }));
     return true;
   }catch(e){ return false; }
@@ -2115,8 +2183,8 @@ function restoreBackup(){
   if(!bak){ showToast('Нөөц хуулбар байхгүй байна'); return; }
   const when=new Date(bak.at).toLocaleString('mn-MN');
   if(!confirm(`${when}-д хийсэн нэгтгэлийг буцаах уу?\n\nТэр үеийн өгөгдөл рүү эргэж очно.`)) return;
-  localStorage.setItem('th_r', bak.r);
-  localStorage.setItem('th_shon', bak.shon);
+  localStorage.setItem(rKey(), bak.r);
+  localStorage.setItem(shKey(), bak.shon);
   loadAll(); loadShon(); renderHome(); renderShonHomePill(); renderSyncCard();
   showToast('Нэгтгэлийн өмнөх төлөв рүү буцлаа ✓');
 }
@@ -2137,8 +2205,8 @@ async function fbPush(){
     const ok=await initFirebase();
     if(!ok||!fbDb){ fbSyncing=false; return; }
     const data={
-      records: JSON.parse(localStorage.getItem('th_r')||'[]'),
-      shon:    JSON.parse(localStorage.getItem('th_shon')||'{}'),
+      records: JSON.parse(localStorage.getItem(rKey())||'[]'),
+      shon:    JSON.parse(localStorage.getItem(shKey())||'{}'),
       updatedAt: Date.now(),
       deviceId: DEVICE_ID,
       deviceName: getDevName()||DEVICE_ID
