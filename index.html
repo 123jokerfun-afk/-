@@ -2033,10 +2033,15 @@ async function recoverMyData(){
         const snap=await fbDb.ref('surveys/'+syncKey()).once('value');
         const mine=snap.val();
         if(mine && (mine.records||mine.shon)){
+          // ЧУХАЛ: орлуулахын ӨМНӨ локал төлөвийг нөөцөлнө. Локал дээр байгаа
+          // (жишээ нь Firebase рүү хараахан sync хийгдээгүй, дэвсгэрт удсан push,
+          // эсвэл сүлжээний зөрчлөөс болсон) ШИНЭ мэдээлэл Firebase-ийн хуучин
+          // хувилбараар дарагдаж, буцаах аргагүй алдагдахаас урьдчилан сэргийлнэ.
+          backupLocal();
           localStorage.setItem(rKey(), JSON.stringify(mine.records||[]));
           localStorage.setItem(shKey(), JSON.stringify(mine.shon||{}));
           loadAll(); loadShon(); renderHome(); renderShonHomePill(); renderSyncCard();
-          showToast(`✅ Firebase-ээс сэргээгдлээ: ${(mine.records||[]).length} бүртгэл, ${Object.keys(mine.shon||{}).length} КМ судалгаа`);
+          showToast(`✅ Firebase-ээс сэргээгдлээ: ${(mine.records||[]).length} бүртгэл, ${Object.keys(mine.shon||{}).length} КМ судалгаа. Хуучин локал төлөв нөөцлөгдсөн тул шаардлагатай бол "↩️ Буцаах" ашиглана уу.`);
           if(btn) btn.disabled=false;
           return;
         }
