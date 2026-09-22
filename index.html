@@ -313,6 +313,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
 .role-ico{font-size:21px;line-height:1}
 .role-btn.on{border-color:var(--forest);background:var(--forest-lite);color:var(--forest)}
 .role-btn#roleAdmin.on{border-color:var(--bark);background:#f7f0e9;color:var(--bark)}
+.role-hint{font-size:11px;font-weight:600;color:var(--muted);text-align:center;margin-top:6px;line-height:1.5;min-height:16px}
+.role-hint.warn{color:#b45309}
 .auth-btn{width:100%;height:46px;border-radius:12px;background:var(--forest);color:#fff;border:none;font-size:14px;font-weight:800;cursor:pointer;margin-top:14px}
 .auth-btn:disabled{opacity:.5;pointer-events:none}
 .auth-btn.sec{background:#fff;color:var(--forest);border:1.5px solid var(--border);margin-top:8px}
@@ -347,6 +349,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
           <button class="role-btn" id="roleAdmin" onclick="pickRole('admin')">
             <span class="role-ico">👔</span><span>Админ</span></button>
         </div>
+        <div class="role-hint" id="roleHint"></div>
       </div>
       <div class="auth-field">
         <div class="auth-label">Нууц үг</div>
@@ -1774,6 +1777,14 @@ function pickRole(r){
   document.getElementById('roleWorker').classList.toggle('on',r==='worker');
   document.getElementById('roleAdmin').classList.toggle('on',r==='admin');
   authMsg('');
+  // Ажилтан гэж андуураад Админ хаягаар бүртгэл хийчихвэл, тэр бүртгэл
+  // localStorage-д хадгалагдах ч Firebase рүү хэзээ ч илгээгддэггүй (Админ нь
+  // зөвхөн цуглуулагч тул). Үүнийг сонголт хийх мөчид тодорхой сануулна.
+  const hint=document.getElementById('roleHint');
+  if(hint){
+    if(r==='admin'){ hint.textContent='⚠️ Админ — зөвхөн бусдын өгөгдлийг цуглуулна. Энд бүртгэл хийвэл Firebase рүү ИЛГЭЭГДЭХГҮЙ!'; hint.className='role-hint warn'; }
+    else if(r==='worker'){ hint.textContent='🔧 Ажилтан — талбайн бүртгэл хийж, Firebase рүү автоматаар илгээнэ'; hint.className='role-hint'; }
+  }
   document.getElementById('authPass').focus();
 }
 
