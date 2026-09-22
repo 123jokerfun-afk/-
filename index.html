@@ -1978,6 +1978,16 @@ function editDevName(){
   showNamePane();
   onClaimInput();
 }
+// Илгээгдэж амжаагүй өөрчлөлтийн тоо. saveAll/saveShonData бүрд нэмэгдэж,
+// fbPush амжилттай болмогц тэглэнэ. localStorage-д хадгалагддаг тул апп
+// дахин нээгдэхэд ч "N илгээгдээгүй" гэдэг мэдээлэл алдагдахгүй.
+function getPendingCount(){ return +localStorage.getItem('th_pending')||0; }
+function markPending(){
+  localStorage.setItem('th_pending', String(getPendingCount()+1));
+  renderSyncCard();
+}
+function clearPending(){ localStorage.setItem('th_pending','0'); renderSyncCard(); }
+
 function renderSyncCard(){
   const nEl=document.getElementById('syncName'), sEl=document.getElementById('syncSub');
   if(!nEl||!sEl) return;
@@ -1985,8 +1995,13 @@ function renderSyncCard(){
   nEl.textContent = name ? ('👤 '+name) : '👤 Нэрээ оруулна уу';
   const cnt=`${records.length} бүртгэл · ${Object.keys(shonData||{}).length} КМ судалгаа`;
   const ls=+localStorage.getItem('th_lastsync')||0;
-  sEl.textContent = ls ? `${cnt} · сүүлд илгээсэн ${new Date(ls).toLocaleString('mn-MN')}`
-                       : `${cnt} · хараахан илгээгээгүй`;
+  const pending=getPendingCount();
+  let tail;
+  if(pending>0 && !navigator.onLine) tail=`⏳ ${pending} өөрчлөлт офлайн хадгалагдсан — интернэт орж ирэхэд илгээгдэнэ`;
+  else if(pending>0)                 tail=`⏳ ${pending} өөрчлөлт илгээгдэж байна...`;
+  else if(ls)                        tail=`✓ илгээгдсэн · ${new Date(ls).toLocaleString('mn-MN')}`;
+  else                                tail='хараахан илгээгээгүй';
+  sEl.textContent = `${cnt} · ${tail}`;
 }
 
 // Firebase SDK-г CDN-ээс динамикаар ачаална
@@ -2096,16 +2111,20 @@ function restoreBackup(){
 }
 
 // Өгөгдлийг Firebase руу push (records + shonData)
+let _fbRetryTimer=null, _fbRetryDelay=5000;
 async function fbPush(){
+  if(fbSyncing) return;               // аль хэдийн явж байгаа push-той давхцахгүй
   if(!navigator.onLine) return;
   // Админ бол цуглуулагч — өгөгдөл илгээхгүй (эс бөгөөс нэгтгэсэн бүхэн давхардаж бичигдэнэ)
   if(authRole!=='worker') return;
   // Нэр баталгаажаагүй бол зангилааны түлхүүр тодорхойгүй тул илгээхгүй
   if(!hasClaimedName()) return;
-  const ok=await initFirebase();
-  if(!ok||!fbDb) return;
+  // ЧУХАЛ: initFirebase()-ийн ӨМНӨ шууд lock хийнэ. Хэрэв initFirebase()-ийн дараа
+  // тавьвал, зэрэгцээ дуудлагууд бүгд `await`-ийн өмнөх шалгуурыг амжиж давхар давна.
   fbSyncing=true;
   try{
+    const ok=await initFirebase();
+    if(!ok||!fbDb){ fbSyncing=false; return; }
     const data={
       records: JSON.parse(localStorage.getItem('th_r')||'[]'),
       shon:    JSON.parse(localStorage.getItem('th_shon')||'{}'),
@@ -2115,9 +2134,19 @@ async function fbPush(){
     };
     await fbDb.ref('surveys/'+syncKey()).set(data);
     localStorage.setItem('th_lastsync',String(Date.now()));
-    renderSyncCard();
+    clearTimeout(_fbRetryTimer); _fbRetryDelay=5000;
+    clearPending();
     showFbStatus('☁️ Хадгалагдлаа','#16a34a');
-  }catch(e){ showFbStatus('⚠️ Sync алдаа','#dc2626'); }
+    fbSyncing=false;
+    return;
+  }catch(e){
+    // Илгээж чадаагүй бол алдаагаад больдоггүй — 5с, 10с, 20с... (дээд тал нь 60с)
+    // хугацаагаар автоматаар дахин оролддог. pending тоо хэвээр үлдэнэ.
+    showFbStatus('⚠️ Sync алдаа — дахин оролдоно','#dc2626');
+    clearTimeout(_fbRetryTimer);
+    _fbRetryTimer=setTimeout(fbPush,_fbRetryDelay);
+    _fbRetryDelay=Math.min(_fbRetryDelay*2,60000);
+  }
   fbSyncing=false;
 }
 
@@ -2191,6 +2220,7 @@ async function fbPullAll(){
 // бүхэлд нь унагаадаг байсан. Одоо эх функцууд нь fbSyncLater()-ийг шууд дууддаг.
 let _fbSyncTimer=null;
 function fbSyncLater(){
+  markPending();
   if(!navigator.onLine) return;
   clearTimeout(_fbSyncTimer);
   _fbSyncTimer=setTimeout(fbPush, 800);
@@ -2199,6 +2229,19 @@ function fbSyncLater(){
 // Онлайн болоход автомат sync
 window.addEventListener('online',()=>{ showFbStatus('🌐 Интернэт холбогдлоо','#2D6A4F'); fbPush(); });
 window.addEventListener('offline',()=>{ showFbStatus('📵 Офлайн горим','#d97706'); });
+
+// ЧУХАЛ: дээрх 'online' эвент зөвхөн апп (tab/PWA) НЭЭЛТТЭЙ байх үед ажиллана.
+// Ажилтан офлайнаар бүртгэл хийгээд аппаа хаавал (эсвэл утсаа унтраавал), дараа нь
+// интернэт орж ирэхэд JS ажиллахгүй тул юу ч илгээгддэггүй байсан — зөвхөн дараагийн
+// удаа апп нээх мөчид л sync хийгддэг байв. Үүнийг нөхөхийн тулд апп дахин ИДЭВХЖИХ
+// (дэвсгэрээс буцах, tab фокуслах, bfcache-с сэргэх) бүрд хуримтлагдсан өөрчлөлт
+// байгаа эсэхийг шалгаж, байвал шууд илгээнэ.
+function checkPendingSync(){
+  if(authRole==='worker' && navigator.onLine && hasClaimedName() && getPendingCount()>0) fbPush();
+}
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') checkPendingSync(); });
+window.addEventListener('focus', checkPendingSync);
+window.addEventListener('pageshow', checkPendingSync);
 
 // Нэгтгэх мөрийг зөвхөн админ хаяг харна (өмнө нь URL-ийн ?manager-ээр л шийддэг байсан)
 function renderManagerBtn(){
