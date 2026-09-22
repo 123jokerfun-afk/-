@@ -295,6 +295,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
 .sync-edit{font-size:14px;opacity:.5}
 .mgr-bar{display:none;gap:6px;margin:8px 14px 0}
 .mgr-bar.show{display:flex}
+.mgr-import{display:none;margin:8px 14px 0;padding:10px 12px;background:#fff7ed;border:1.5px solid #fdba74;border-radius:12px}
+.mgr-import.show{display:block}
+.mgr-import-txt{font-size:11.5px;color:#9a5a1a;line-height:1.5;margin-bottom:8px}
+.mgr-import-btn{width:100%;height:38px;border-radius:9px;background:#d97706;color:#fff;border:none;font-size:12.5px;font-weight:700;cursor:pointer}
+.mgr-import-btn:disabled{opacity:.5;pointer-events:none}
 .mgr-btn{flex:1;height:40px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;color:#fff;background:var(--forest2)}
 .mgr-btn.undo{background:#fff;color:var(--bark);border:1.5px solid var(--bark);flex:0 0 auto;padding:0 12px}
 .mgr-btn:active{opacity:.85}
@@ -411,6 +416,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
   <div class="mgr-bar" id="mgrBar">
     <button class="mgr-btn" onclick="fbPullAll()">👥 Бүгдийн өгөгдөл татах</button>
     <button class="mgr-btn undo" onclick="restoreBackup()">↩️ Буцаах</button>
+  </div>
+  <div class="mgr-import" id="mgrImport">
+    <div class="mgr-import-txt" id="mgrImportTxt"></div>
+    <button class="mgr-import-btn" id="mgrImportBtn" onclick="importOldAdminData()">📥 Хуучин бичлэгээ энд авчрах</button>
   </div>
   <div class="stats-row">
     <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Нийт бүртгэл</div></div>
@@ -2329,10 +2338,63 @@ function renderManagerBtn(){
   if(authRole==='admin'){
     bar?.classList.add('show');
     if(sub) sub.textContent='ПЧ-3 · АДМИН ГОРИМ 👔';
+    checkAdminMigration();
   } else {
     bar?.classList.remove('show');
     if(sub) sub.textContent='ПЧ-3 · Малын хориг хашааны үнэлгээ';
+    document.getElementById('mgrImport')?.classList.remove('show');
   }
+}
+
+// ── АДМИНИЙ ХУУЧИН (шинэчлэлтээс өмнөх) ЛОКАЛ БИЧЛЭГИЙГ ИМПОРТЛОХ ──
+// Админ ба Ажилтан горим өмнө нь НЭГ л localStorage сан (th_r/th_shon)
+// хуваалцдаг байсан тул, шинэчлэлтийн ӨМНӨ Админ хаягаар бичсэн бичлэг
+// одоо (rKey()/shKey() 'th_admin_r'/'th_admin_shon' руу шилжсэний дараа)
+// "алга болсон" мэт харагдана — бодит байдал дээр устаагүй, зөвхөн
+// хуучин th_r/th_shon санд үлдсэн хэвээр. Үүнийг Админ горим руу
+// (устгалгүй, зөвхөн нэмж) шилжүүлэх боломж олгоно.
+function checkAdminMigration(){
+  if(authRole!=='admin') return;
+  const wrap=document.getElementById('mgrImport'); if(!wrap) return;
+  let adminHas=false, oldN=0, oldSN=0;
+  try{
+    adminHas = (JSON.parse(localStorage.getItem('th_admin_r')||'[]').length>0)
+            || (Object.keys(JSON.parse(localStorage.getItem('th_admin_shon')||'{}')).length>0);
+  }catch(e){}
+  try{ oldN=JSON.parse(localStorage.getItem('th_r')||'[]').length; }catch(e){}
+  try{ oldSN=Object.keys(JSON.parse(localStorage.getItem('th_shon')||'{}')).length; }catch(e){}
+  if(!adminHas && (oldN>0 || oldSN>0)){
+    document.getElementById('mgrImportTxt').textContent=
+      `⚠️ Шинэчлэлтээс өмнөх ${oldN} бүртгэл, ${oldSN} КМ судалгаа олдлоо `+
+      `(магадгүй хуучин хувилбараар Админ горимд бичсэн). Энэ утсан дээр `+
+      `Ажилтан горимоор ч бичлэг хийдэг бол давхардуулахгүйн тулд анхааралтай байна уу.`;
+    wrap.classList.add('show');
+  } else {
+    wrap.classList.remove('show');
+  }
+}
+async function importOldAdminData(){
+  if(authRole!=='admin') return;
+  let oldR=[], oldS={};
+  try{ oldR=JSON.parse(localStorage.getItem('th_r')||'[]'); }catch(e){}
+  try{ oldS=JSON.parse(localStorage.getItem('th_shon')||'{}'); }catch(e){}
+  if(!oldR.length && !Object.keys(oldS).length){ showToast('Хуучин өгөгдөл олдсонгүй'); return; }
+  if(!confirm(`Шинэчлэлтээс өмнөх ${oldR.length} бүртгэл, ${Object.keys(oldS).length} `+
+    `КМ судалгааг Админ горим руу авчрах уу?\n\nЗөвхөн ШИНЭ (одоо байхгүй) бичлэгийг нэмнэ, `+
+    `давхардсаныг алгасна. Одоогийн Админ мэдээлэл нөөцлөгдөнө, "↩️ Буцаах" дарж эргүүлж болно.`)) return;
+  const btn=document.getElementById('mgrImportBtn'); if(btn) btn.disabled=true;
+  backupLocal();
+  let added=0, addedS=0;
+  oldR.forEach(r=>{
+    if(!r||r.km===undefined) return;
+    if(!records.some(x=>x.km===r.km && x.side===r.side)){ records.push(r); added++; }
+  });
+  Object.keys(oldS).forEach(k=>{ if(!shonData[k]){ shonData[k]=oldS[k]; addedS++; } });
+  saveAll(); saveShonData();
+  renderHome(); renderShonHomePill(); renderSyncCard();
+  document.getElementById('mgrImport')?.classList.remove('show');
+  if(btn) btn.disabled=false;
+  showToast(`✅ ${added} бүртгэл, ${addedS} КМ судалгаа авчрагдлаа`);
 }
 
 // Service worker — офлайн ажиллагаа (зөвхөн http/https дээр бүртгэгдэнэ;
