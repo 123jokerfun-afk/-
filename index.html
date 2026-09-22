@@ -300,6 +300,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
 .mgr-import-txt{font-size:11.5px;color:#9a5a1a;line-height:1.5;margin-bottom:8px}
 .mgr-import-btn{width:100%;height:38px;border-radius:9px;background:#d97706;color:#fff;border:none;font-size:12.5px;font-weight:700;cursor:pointer}
 .mgr-import-btn:disabled{opacity:.5;pointer-events:none}
+.mgr-diag-btn{width:100%;margin:6px 14px 0;height:34px;border-radius:9px;background:none;border:1.5px dashed var(--border);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer}
 .mgr-btn{flex:1;height:40px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;color:#fff;background:var(--forest2)}
 .mgr-btn.undo{background:#fff;color:var(--bark);border:1.5px solid var(--bark);flex:0 0 auto;padding:0 12px}
 .mgr-btn:active{opacity:.85}
@@ -421,6 +422,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Ar
     <div class="mgr-import-txt" id="mgrImportTxt"></div>
     <button class="mgr-import-btn" id="mgrImportBtn" onclick="importOldAdminData()">📥 Хуучин бичлэгээ энд авчрах</button>
   </div>
+  <button class="mgr-diag-btn" id="mgrDiagBtn" onclick="showStorageDiagnostic()" style="display:none">🔍 Энэ утсан дээрх бүх мэдээллийг шалгах</button>
   <div class="stats-row">
     <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Нийт бүртгэл</div></div>
     <div class="stat-card"><div class="stat-num" id="statKm">0</div><div class="stat-label">КМ тоо</div></div>
@@ -2340,15 +2342,62 @@ window.addEventListener('pageshow', checkPendingSync);
 function renderManagerBtn(){
   const bar=document.getElementById('mgrBar');
   const sub=document.querySelector('.hdr-sub');
+  const diagBtn=document.getElementById('mgrDiagBtn');
   if(authRole==='admin'){
     bar?.classList.add('show');
     if(sub) sub.textContent='ПЧ-3 · АДМИН ГОРИМ 👔';
     checkAdminMigration();
+    if(diagBtn) diagBtn.style.display='block';
   } else {
     bar?.classList.remove('show');
     if(sub) sub.textContent='ПЧ-3 · Малын хориг хашааны үнэлгээ';
     document.getElementById('mgrImport')?.classList.remove('show');
+    if(diagBtn) diagBtn.style.display='none';
   }
+}
+
+// ── ДИАГНОСТИК: тухайн утсан дээрх БҮХ localStorage сангийн агуулгыг
+// харуулна (устгах/өөрчлөх ЯМАР Ч үйлдэл хийхгүй, зөвхөн уншина). Хайж
+// байгаа бүртгэл/шон судалгаа аль санд байгааг (эсвэл огт байхгүйг)
+// шууд харахад зориулагдсан.
+function summarizeStore(key){
+  const raw=localStorage.getItem(key);
+  if(!raw) return '(хоосон)';
+  try{
+    const v=JSON.parse(raw);
+    if(Array.isArray(v)){
+      if(!v.length) return '(хоосон массив)';
+      return v.map(r=>`${r.km}${(r.side||'')[0]||''}`).join(', ');
+    }
+    const keys=Object.keys(v);
+    return keys.length?keys.join(', '):'(хоосон объект)';
+  }catch(e){ return '(парс алдаа)'; }
+}
+function showStorageDiagnostic(){
+  const bak=(()=>{ try{ return JSON.parse(localStorage.getItem('th_bak')||'null'); }catch(e){ return null; } })();
+  let bakInfo='байхгүй';
+  if(bak){
+    const when=new Date(bak.at).toLocaleString('mn-MN');
+    let bakR=[], bakS={};
+    try{ bakR=JSON.parse(bak.r||'[]'); }catch(e){}
+    try{ bakS=JSON.parse(bak.shon||'{}'); }catch(e){}
+    bakInfo=`${when}\n  Бүртгэл: ${bakR.map(r=>`${r.km}${(r.side||'')[0]||''}`).join(', ')||'(хоосон)'}\n  Шон: ${Object.keys(bakS).join(', ')||'(хоосон)'}`;
+  }
+  alert(
+`📦 ТУХАЙН УТСАН ДЭЭРХ БҮХ МЭДЭЭЛЭЛ
+
+── АЖИЛТНЫ САН (th_r / th_shon) ──
+Бүртгэл: ${summarizeStore('th_r')}
+Шон судалгаа (КМ): ${summarizeStore('th_shon')}
+
+── АДМИНЫ САН (th_admin_r / th_admin_shon) ──
+Бүртгэл: ${summarizeStore('th_admin_r')}
+Шон судалгаа (КМ): ${summarizeStore('th_admin_shon')}
+
+── НӨӨЦ ХУУЛБАР (th_bak) ──
+${bakInfo}
+
+Хайж буй КМ дээрх мэдээллийг эдгээрийн аль нэгэнд харвал, ямар санд байгааг тэмдэглэж хэлээрэй — тэндээс сэргээх аргыг зааж өгнө.`);
 }
 
 // ── АДМИНИЙ ХУУЧИН (шинэчлэлтээс өмнөх) ЛОКАЛ БИЧЛЭГИЙГ ИМПОРТЛОХ ──
